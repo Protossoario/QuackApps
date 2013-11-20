@@ -76,15 +76,17 @@ public class Player extends GameObject implements KeyListener {
 		
 		vel.setY(vel.getY() + accel.getY());
 		
-		if (leftPressed && !rightPressed) {
-			vel.setX(-SPEED);
-		}
-		else if (!leftPressed && rightPressed) {
-			vel.setX(SPEED);
-		}
-		
-		if (upPressed && onGround) {
-			vel.setY(-JUMP);
+		if (onGround) {
+			if (leftPressed && !rightPressed) {
+				vel.setX(-SPEED);
+			}
+			else if (!leftPressed && rightPressed) {
+				vel.setX(SPEED);
+			}
+			
+			if (upPressed) {
+				vel.setY(-JUMP);
+			}
 		}
 		
 		updateAnimations();
