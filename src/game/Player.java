@@ -62,6 +62,15 @@ public class Player extends GameObject implements KeyListener {
 		return null;
 	}
 
+	private void updateAnimations() {
+		if (vel.getX() > 0) {
+			currentAnimation = walkRight;
+		}
+		else if (vel.getX() < 0) {
+			currentAnimation = walkLeft;
+		}
+	}
+	
 	public void update() {
 		currentAnimation.updateAnimation();
 		
@@ -77,6 +86,8 @@ public class Player extends GameObject implements KeyListener {
 		if (upPressed && onGround) {
 			vel.setY(-JUMP);
 		}
+		
+		updateAnimations();
 		
 		pos = pos.add(vel);
 	}
