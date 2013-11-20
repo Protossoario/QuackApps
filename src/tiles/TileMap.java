@@ -3,6 +3,8 @@ package tiles;
 import game.GamePanel;
 import image.ImageLoader;
 
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,13 +13,46 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class TileMap {
+	private static final int TILE_SIZE = 64;
+	private static final int EMPTY_TILE = -1;
+	
 	// Guarda las imagenes de los tiles
-	ArrayList <BufferedImage> tiles;
+	private ArrayList <BufferedImage> tiles;
 	
 	// Matriz bidimensional que guarda el numero de tile que corresponde al subindice (i, j)
 	// Para cada subindice, se guarda un numero (0, 1, 2, etc.) que indica el numero de tile que es
 	// De lo contrario, se marca con un -1 los espacios vacios
-	int map[][];
+	private int map[][];
+	
+	public static int pixelsToTiles(double pixels) {
+		return (int) pixels / TILE_SIZE;
+	}
+	
+	public static int tilesToPixels(int tiles) {
+		return tiles * TILE_SIZE;
+	}
+	
+	/**
+	 * Checa la colision de un rectangulo con alguno de los tiles del mapa
+	 * @param rect El rectangulo de colision
+	 * @return El tile con el que colisiona el rectangulo, o null si no hay colision
+	 */
+	public Point checkTileCollision(Rectangle rect) {
+		int fromTileX = pixelsToTiles(rect.getMinX());
+		int fromTileY = pixelsToTiles(rect.getMinY());
+		int toTileX = pixelsToTiles(rect.getMaxX() - 1);
+		int toTileY = pixelsToTiles(rect.getMaxY() - 1);
+		
+		for (int x = fromTileX; x <= toTileX; x++) {
+			for (int y = fromTileY; y <= toTileY; y++) {
+				if (x < 0 || x >= getWidth() || map[x][y] != EMPTY_TILE) {
+					return new Point(x, y);
+				}
+			}
+		}
+		
+		return null;
+	}
 	
 	/**
 	 * Metodo para leer el archivo de texto y cargar los datos a la matriz de enteros
@@ -55,7 +90,7 @@ public class TileMap {
 			}
 			
 			for ( ; j < max_length; j++) {
-				map[i][j] = -1;
+				map[i][j] = EMPTY_TILE;
 			}
 		}
 	}

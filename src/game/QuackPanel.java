@@ -1,21 +1,78 @@
 package game;
 
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+
+import tiles.TileMap;
 
 @SuppressWarnings("serial")
 public class QuackPanel extends GamePanel {
 	private Player player;
+	private TileMap map;
 	private Graphics dbg;
 	
 	public QuackPanel() {
 		super();
 		
 		player = new Player(this);
+		map = new TileMap("level1.txt", this);
+	}
+	
+	private void checkCollisions() {
+		/* Actualizamos la posicion en X en base a si hay o no colision */
+		double posX = player.getPos().getX();
+		double velX = player.getVel().getX();
+		double newX = posX + velX;
+		Rectangle playerBox = new Rectangle((int) newX, (int) player.getPos().getY(),
+											player.getWidth(), player.getHeight());
+		Point tile = map.checkTileCollision(playerBox);
+		// No hubo colision en X, asi que actualizamos su posicion en este eje
+		if (tile == null) {
+			player.getPos().setX(newX);
+		}
+		else {
+			// Si esta moviendo a la derecha, alinearlo al borde izquierdo del tile
+			if (velX > 0) {
+				newX = TileMap.tilesToPixels(tile.x) - player.getWidth();
+				player.getPos().setX(newX);
+			}
+			// Si se mueve a la izquierda, alinearlo al borde derecho del tile
+			else if (velX < 0) {
+				newX = TileMap.tilesToPixels(tile.x + 1);
+				player.getPos().setX(newX);
+			}
+		}
+		
+		/* Lo mismo para la posicion en Y */
+		double posY = player.getPos().getY();
+		double velY = player.getVel().getY();
+		double newY = posY + velY;
+		playerBox.setBounds((int) player.getPos().getX(), (int) newY,
+											player.getWidth(), player.getHeight());
+		tile = map.checkTileCollision(playerBox);
+		// No hubo colision en Y, asi que actualizamos su posicion en este eje
+		if (tile == null) {
+			player.getPos().setY(newY);
+		}
+		else {
+			// Si esta cayendo (moviendose hacia abajo), alinearlo al borde superior del tile
+			if (velY > 0) {
+				newY = TileMap.tilesToPixels(tile.y) - player.getHeight();
+				player.getPos().setY(newY);
+			}
+			// Si esta saltando (moviendose hacia arriba), alinearlo al borde inferior del tile
+			else if (velY < 0) {
+				newY = TileMap.tilesToPixels(tile.y + 1);
+				player.getPos().setY(newY);
+			}
+		}
 	}
 	
 	protected void gameUpdate() {
 		player.update();
+		checkCollisions();
 	}
 
 	protected void gameRender() {
