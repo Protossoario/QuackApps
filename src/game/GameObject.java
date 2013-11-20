@@ -18,7 +18,7 @@ import geom.Vector;
 import image.ImageLoader;
 import sound.ClipsLoader;
 
-abstract class GameObject {
+public abstract class GameObject {
 	protected Vector pos; // vector de la posicion en el centro del objeto
 	protected Vector vel; // vector de velocidad
 	protected Vector accel; // vector de aceleracion
