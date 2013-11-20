@@ -138,4 +138,11 @@ public class TileMap {
 	public int getHeight() {
 		return map.length;
 	}
+	
+	public BufferedImage getTileImage(int x, int y) {
+		if (map[x][y] == EMPTY_TILE) {
+			return null;
+		}
+		return tiles.get(map[x][y]);
+	}
 }

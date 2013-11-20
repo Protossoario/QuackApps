@@ -93,6 +93,10 @@ public class Player extends GameObject implements KeyListener {
 		
 		pos = pos.add(vel);
 	}
+	
+	public BufferedImage getCurrentImage() {
+		return imageL.getImage(currentAnimation.getCurrentSprite());
+	}
 
 	public void keyTyped(KeyEvent e) {
 	}

@@ -86,7 +86,46 @@ public class QuackPanel extends GamePanel {
 				dbg = dbImage.getGraphics();
 			}
 		}
+
+		/* Calculamos el offset en X */
+		int offsetX = (int) (PWIDTH - (player.getPos().getX() + player.getWidth() / 2));
+		int max_offsetX = PWIDTH - map.getWidth();
+		if (offsetX > 0) {
+			offsetX = 0;
+		}
+		else if (offsetX < max_offsetX) {
+			offsetX = max_offsetX;
+		}
 		
-		player.paint(dbg);
+		/* Calculamos el offset en Y */
+		int offsetY = (int) (PHEIGHT - (player.getPos().getY() + player.getHeight() / 2));
+		int max_offsetY = PHEIGHT - map.getHeight();
+		if (offsetY > 0) {
+			offsetY = 0;
+		}
+		else if (offsetY < max_offsetY) {
+			offsetY = max_offsetY;
+		}
+		
+		/* Pintar los tiles visibles */
+		int fromTileX = TileMap.pixelsToTiles(-offsetX);
+		int fromTileY = TileMap.pixelsToTiles(-offsetY);
+		int toTileX = fromTileX + TileMap.pixelsToTiles(PWIDTH) + 1;
+		int toTileY = fromTileY + TileMap.pixelsToTiles(PHEIGHT) + 1;
+		for (int x = fromTileX; x <= toTileX; x++) {
+			for (int y = fromTileY; y <= toTileY; y++) {
+				BufferedImage tileImg = map.getTileImage(x, y);
+				if (tileImg != null) {
+					dbg.drawImage(tileImg,
+								TileMap.tilesToPixels(x) + offsetX,
+								TileMap.tilesToPixels(y) + offsetY, this);
+				}
+			}
+		}
+		
+		/* Pintar al jugador */
+		dbg.drawImage(player.getCurrentImage(),
+					(int) (player.getPos().getX() + offsetX),
+					(int) (player.getPos().getY() + offsetY), this);
 	}
 }
