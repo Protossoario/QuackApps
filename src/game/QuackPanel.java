@@ -1,10 +1,14 @@
 package game;
 
+import image.ImageLoader;
+
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import sound.ClipsLoader;
+import sound.MidisLoader;
 import tiles.TileMap;
 
 @SuppressWarnings("serial")
@@ -15,6 +19,10 @@ public class QuackPanel extends GamePanel {
 	
 	public QuackPanel() {
 		super();
+		
+		imageL = new ImageLoader("images.txt");
+		clipsL = new ClipsLoader("sounds.txt");
+		midisL = new MidisLoader("sounds.txt");
 		
 		player = new Player(this);
 		map = new TileMap("level1.txt", this);

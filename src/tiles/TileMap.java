@@ -128,6 +128,7 @@ public class TileMap {
 	 */
 	public TileMap(String file, GamePanel gp) {
 		loadMap("maps/" + file);
+		tiles = new ArrayList <BufferedImage> ();
 		getTiles(gp.getImageLoader());
 	}
 	
