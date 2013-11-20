@@ -28,7 +28,7 @@ public class Animation {
 	
 	private boolean looping; // indica si la animacion se repite
 	
-	Animation(String ... _frames) {
+	public Animation(String ... _frames) {
 		maxTime = 0;
 		maxIndex = 0;
 		elapsedTime = 0;
@@ -46,7 +46,7 @@ public class Animation {
 		observers = new ArrayList<AnimationObserver>();
 	}
 	
-	Animation() {
+	public Animation() {
 		maxTime = 0;
 		maxIndex = 0;
 		elapsedTime = 0;

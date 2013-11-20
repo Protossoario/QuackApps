@@ -33,8 +33,8 @@ public abstract class GamePanel extends JPanel implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private static final int PWIDTH = 800; // tamanio de la ventana
-	private static final int PHEIGHT = 600;
+	protected static final int PWIDTH = 800; // tamanio de la ventana
+	protected static final int PHEIGHT = 600;
 	
 	private Thread animator; // thread de la animacion
 	/* Las siguientes variables se marcan como "volatiles" para poder utilizarlas
@@ -51,8 +51,8 @@ public abstract class GamePanel extends JPanel implements Runnable {
 	private static final int NO_DELAYS_PER_YIELD = 100; // limite de "frames sin dormir" que debe de soportar la animacion
 	private static final int MAX_FRAME_SKIPS = 5; // limite de frames que se puede saltar la animacion cuando esta tardando mucho
 	
-	private BufferedImage dbImage; // imagen buffer de la pantalla
-	private ImageLoader imageL;
+	protected BufferedImage dbImage; // imagen buffer de la pantalla
+	protected ImageLoader imageL;
 	private ClipsLoader clipsL;
 	private MidisLoader midisL;
 		
