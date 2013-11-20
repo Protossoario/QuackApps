@@ -1,12 +1,60 @@
 package game;
 
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 
-public class Player extends GameObject {
+import anim.Animation;
 
+public class Player extends GameObject implements KeyListener {
+	private Animation walkLeft;
+	private Animation walkRight;
+	
+	private boolean leftPressed;
+	private boolean rightPressed;
+	private boolean upPressed;
+	private boolean onGround;
+	
+	private static final double GRAVITY = 1;
+	private static final double SPEED = 5;
+	private static final int JUMP = 10;
+	
 	Player(GamePanel gp) {
 		super(gp);
-		// TODO Auto-generated constructor stub
+		
+		// Inicializamos las animaciones para caminar a la izquierda y derecha
+		walkLeft = new Animation();
+		walkLeft.addFrame("patoCaminaIzq1.png", 1);
+		walkLeft.addFrame("patoCaminaIzq2.png", 1);
+		walkLeft.addFrame("patoCaminaIzq3.png", 1);
+		walkLeft.addFrame("patoCaminaIzq4.png", 1);
+		walkLeft.addFrame("patoCaminaIzq5.png", 1);
+		walkLeft.addFrame("patoCaminaIzq6.png", 1);
+		walkLeft.addFrame("patoCaminaIzq7.png", 1);
+		walkLeft.addFrame("patoCaminaIzq8.png", 1);
+		walkLeft.setLooping(true);
+		
+		walkRight = new Animation();
+		walkRight.addFrame("patoCaminaDer1.png", 1);
+		walkRight.addFrame("patoCaminaDer2.png", 1);
+		walkRight.addFrame("patoCaminaDer3.png", 1);
+		walkRight.addFrame("patoCaminaDer4.png", 1);
+		walkRight.addFrame("patoCaminaDer5.png", 1);
+		walkRight.addFrame("patoCaminaDer6.png", 1);
+		walkRight.addFrame("patoCaminaDer7.png", 1);
+		walkRight.addFrame("patoCaminaDer8.png", 1);
+		walkRight.setLooping(true);
+		
+		currentAnimation = walkRight;
+		
+		// Fijamos la aceleracion de la gravedad de forma permanente
+		accel.setY(GRAVITY);
+		
+		// Inicializamos el tamano
+		BufferedImage img = imageL.getImage(currentAnimation.getCurrentSprite());
+		width = img.getWidth();
+		height = img.getHeight();
 	}
 
 	public Rectangle getCollisionRect() {
@@ -15,7 +63,50 @@ public class Player extends GameObject {
 	}
 
 	public void update() {
-		// TODO Auto-generated method stub
+		currentAnimation.updateAnimation();
 		
+		vel.setY(vel.getY() + accel.getY());
+		
+		if (leftPressed && !rightPressed) {
+			vel.setX(-SPEED);
+		}
+		else if (!leftPressed && rightPressed) {
+			vel.setX(SPEED);
+		}
+		
+		if (upPressed && onGround) {
+			vel.setY(-JUMP);
+		}
+		
+		pos = pos.add(vel);
+	}
+
+	public void keyTyped(KeyEvent e) {
+	}
+
+	public void keyPressed(KeyEvent e) {
+		int code = e.getKeyCode();
+		if (code == KeyEvent.VK_LEFT) {
+			leftPressed = true;
+		}
+		else if (code == KeyEvent.VK_RIGHT) {
+			rightPressed = true;
+		}
+		else if (code == KeyEvent.VK_UP) {
+			upPressed = true;
+		}
+	}
+
+	public void keyReleased(KeyEvent e) {
+		int code = e.getKeyCode();
+		if (code == KeyEvent.VK_LEFT) {
+			leftPressed = false;
+		}
+		else if (code == KeyEvent.VK_RIGHT) {
+			rightPressed = false;
+		}
+		else if (code == KeyEvent.VK_UP) {
+			upPressed = false;
+		}
 	}
 }
