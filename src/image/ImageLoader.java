@@ -24,7 +24,7 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 public class ImageLoader {
-	private static final String IMGS_DIR = "res/";
+	private static final String IMGS_DIR = "images/";
 	
 	private HashMap<String, BufferedImage> imagesMap;
 	private GraphicsConfiguration gc;

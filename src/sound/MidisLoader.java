@@ -16,7 +16,7 @@ import javax.sound.midi.Synthesizer;
 import javax.sound.midi.Transmitter;
 
 public class MidisLoader implements MetaEventListener {
-	private static final String SOUNDS_DIR = "res/";
+	private static final String SOUNDS_DIR = "sounds/";
 	private static final int END_OF_TRACK = 47;
 	
 	private Sequencer sequencer;

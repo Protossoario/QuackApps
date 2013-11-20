@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ClipsLoader {
-	private static final String SOUNDS_DIR = "res/";
+	private static final String SOUNDS_DIR = "sounds/";
 	private HashMap<String, ClipInfo> clipsMap;
 	
 	public ClipsLoader(String soundsFnm) {
