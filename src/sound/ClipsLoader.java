@@ -1,5 +1,5 @@
 /**
- * @author Eduardo A. Sanchez y Gina Gil lozano
+ * @author Eduardo A. Sanchez
  * 
  * Clase utilizada para cargar clips de audio cortos.
  * Soporta multiples clips reproduciendose de manera

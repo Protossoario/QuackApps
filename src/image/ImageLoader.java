@@ -1,5 +1,5 @@
 /**
- * @author Eduardo A. Sanchez y Gina gil lozano
+ * @author Eduardo A. Sanchez
  * 
  * Clase que carga una serie de imagenes en base a un archivo de texto
  * que lista los nombres de aquellas que deben ser cargadas.

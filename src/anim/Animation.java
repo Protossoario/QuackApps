@@ -1,5 +1,5 @@
 /**
- * @author Eduardo A. Sanchez y Gina Gil lozano
+ * @author Eduardo A. Sanchez
  * 
  * Clase para manejar sprites animados. Lleva la cuenta
  * del sprite que corresponde a cada Frame para una

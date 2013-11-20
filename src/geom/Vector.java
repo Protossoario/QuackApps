@@ -1,5 +1,5 @@
 /**
- * @author Eduardo A. Sanchez y Gina Gil lozano
+ * @author Eduardo A. Sanchez
  * 
  * Clase matematica empleada para las fisicas del juego.
  * Maneja los conceptos de puntos en el espacio geometrico bidimensional,

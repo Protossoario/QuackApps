@@ -1,5 +1,5 @@
 /**
- * @author Eduardo A. Sanchez y Gina Gil Lozano
+ * @author Eduardo A. Sanchez
  * 
  * Clase que se encarga de cargar los clips de audio,
  * y almacenar la informacion para controlar la
