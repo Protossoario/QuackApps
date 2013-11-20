@@ -61,6 +61,9 @@ public class QuackPanel extends GamePanel {
 			if (velY > 0) {
 				newY = TileMap.tilesToPixels(tile.y) - player.getHeight();
 				player.getPos().setY(newY);
+				if (!player.isOnGround()) {
+					player.setOnGround(true);
+				}
 			}
 			// Si esta saltando (moviendose hacia arriba), alinearlo al borde inferior del tile
 			else if (velY < 0) {

@@ -94,6 +94,14 @@ public class Player extends GameObject implements KeyListener {
 		pos = pos.add(vel);
 	}
 	
+	public boolean isOnGround() {
+		return onGround;
+	}
+	
+	public void setOnGround(boolean onGround) {
+		this.onGround = onGround;
+	}
+	
 	public BufferedImage getCurrentImage() {
 		return imageL.getImage(currentAnimation.getCurrentSprite());
 	}
