@@ -119,6 +119,7 @@ public class TileMap {
 				System.out.println("Tile #" + i + " es null.");
 				end = true;
 			}
+			i++;
 		}
 	}
 	
