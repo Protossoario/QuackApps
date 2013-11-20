@@ -53,8 +53,8 @@ public abstract class GamePanel extends JPanel implements Runnable {
 	
 	protected BufferedImage dbImage; // imagen buffer de la pantalla
 	protected ImageLoader imageL;
-	private ClipsLoader clipsL;
-	private MidisLoader midisL;
+	protected ClipsLoader clipsL;
+	protected MidisLoader midisL;
 		
 	/**
 	 * Constructor del panel
