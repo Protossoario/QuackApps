@@ -29,25 +29,25 @@ public class Player extends GameObject implements KeyListener {
 		
 		// Inicializamos las animaciones para caminar a la izquierda y derecha
 		walkLeft = new Animation();
-		walkLeft.addFrame("patoCaminaIzq1.png", 1);
-		walkLeft.addFrame("patoCaminaIzq2.png", 1);
-		walkLeft.addFrame("patoCaminaIzq3.png", 1);
-		walkLeft.addFrame("patoCaminaIzq4.png", 1);
-		walkLeft.addFrame("patoCaminaIzq5.png", 1);
-		walkLeft.addFrame("patoCaminaIzq6.png", 1);
-		walkLeft.addFrame("patoCaminaIzq7.png", 1);
-		walkLeft.addFrame("patoCaminaIzq8.png", 1);
+		walkLeft.addFrame("patoCaminaIzq1.png", 5);
+		walkLeft.addFrame("patoCaminaIzq2.png", 5);
+		walkLeft.addFrame("patoCaminaIzq3.png", 5);
+		walkLeft.addFrame("patoCaminaIzq4.png", 5);
+		walkLeft.addFrame("patoCaminaIzq5.png", 5);
+		walkLeft.addFrame("patoCaminaIzq6.png", 5);
+		walkLeft.addFrame("patoCaminaIzq7.png", 5);
+		walkLeft.addFrame("patoCaminaIzq8.png", 5);
 		walkLeft.setLooping(true);
 		
 		walkRight = new Animation();
-		walkRight.addFrame("patoCaminaDer1.png", 1);
-		walkRight.addFrame("patoCaminaDer2.png", 1);
-		walkRight.addFrame("patoCaminaDer3.png", 1);
-		walkRight.addFrame("patoCaminaDer4.png", 1);
-		walkRight.addFrame("patoCaminaDer5.png", 1);
-		walkRight.addFrame("patoCaminaDer6.png", 1);
-		walkRight.addFrame("patoCaminaDer7.png", 1);
-		walkRight.addFrame("patoCaminaDer8.png", 1);
+		walkRight.addFrame("patoCaminaDer1.png", 5);
+		walkRight.addFrame("patoCaminaDer2.png", 5);
+		walkRight.addFrame("patoCaminaDer3.png", 5);
+		walkRight.addFrame("patoCaminaDer4.png", 5);
+		walkRight.addFrame("patoCaminaDer5.png", 5);
+		walkRight.addFrame("patoCaminaDer6.png", 5);
+		walkRight.addFrame("patoCaminaDer7.png", 5);
+		walkRight.addFrame("patoCaminaDer8.png", 5);
 		walkRight.setLooping(true);
 		
 		currentAnimation = walkRight;
