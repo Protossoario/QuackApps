@@ -70,7 +70,14 @@ public class QuackPanel extends GamePanel {
 		// No hubo colision en Y, asi que actualizamos su posicion en este eje
 		if (tile == null) {
 			player.getPos().setY(newY);
-			if (player.isOnGround()) {
+			
+			// Si hay espacio vacio debajo del pato, avisarle que esta cayendo
+			playerBox.setBounds((int) player.getPos().getX(),
+								(int) (newY + player.getHeight()) + 1,
+								player.getWidth(),
+								player.getHeight());
+			tile = map.checkTileCollision(playerBox);
+			if (tile == null && player.isOnGround()) {
 				player.setOnGround(false);
 			}
 		}

@@ -8,13 +8,18 @@ import java.awt.image.BufferedImage;
 import anim.Animation;
 
 public class Player extends GameObject implements KeyListener {
+	private Animation standLeft;
+	private Animation standRight;
 	private Animation walkLeft;
 	private Animation walkRight;
+	private Animation jumpLeft;
+	private Animation jumpRight;
 	
 	private boolean leftPressed;
 	private boolean rightPressed;
 	private boolean upPressed;
 	private boolean onGround;
+	private boolean facingRight;
 	
 	private static final double GRAVITY = 0.5;
 	private static final double MAX_FALL = 10;
@@ -24,33 +29,82 @@ public class Player extends GameObject implements KeyListener {
 	private static final double FRICTION = 0.75;
 	private static final double JUMP = 12.5;
 	
+	private static final int FRAME = 5;
+	private static final int SECOND = 60;
+	
 	Player(GamePanel gp) {
 		super(gp);
 		
+		// Inicializamos las animaciones para el pato parado volteando a la izquierda y a la derecha
+		standLeft = new Animation();
+		standLeft.addFrame("patoParadoIzq1.png", 2 * SECOND);
+		standLeft.addFrame("patoParadoIzq6.png", 1 * FRAME);
+		standLeft.addFrame("patoParadoIzq1.png", 2 * SECOND);
+		standLeft.addFrame("patoParadoIzq6.png", 1 * FRAME);
+		standLeft.addFrame("patoParadoIzq1.png", 2 * SECOND);
+		standLeft.addFrame("patoParadoIzq6.png", 1 * FRAME);
+		standLeft.addFrame("patoParadoIzq1.png", 2 * SECOND);
+		standLeft.addFrame("patoParadoIzq6.png", 1 * FRAME);
+		standLeft.addFrame("patoParadoIzq1.png", 2 * SECOND);
+		standLeft.addFrame("patoParadoIzq2.png", 3 * FRAME);
+		standLeft.addFrame("patoParadoIzq3.png", 3 * FRAME);
+		standLeft.addFrame("patoParadoIzq4.png", 3 * FRAME);
+		standLeft.setLooping(true);
+		
+		standRight = new Animation();
+		standRight.addFrame("patoParadoDer1.png", 2 * SECOND);
+		standRight.addFrame("patoParadoDer6.png", 1 * FRAME);
+		standRight.addFrame("patoParadoDer1.png", 2 * SECOND);
+		standRight.addFrame("patoParadoDer6.png", 1 * FRAME);
+		standRight.addFrame("patoParadoDer1.png", 2 * SECOND);
+		standRight.addFrame("patoParadoDer6.png", 1 * FRAME);
+		standRight.addFrame("patoParadoDer1.png", 2 * SECOND);
+		standRight.addFrame("patoParadoDer6.png", 1 * FRAME);
+		standRight.addFrame("patoParadoDer1.png", 2 * SECOND);
+		standRight.addFrame("patoParadoDer2.png", 3 * FRAME);
+		standRight.addFrame("patoParadoDer3.png", 3 * FRAME);
+		standRight.addFrame("patoParadoDer4.png", 3 * FRAME);
+		standRight.setLooping(true);
+		
 		// Inicializamos las animaciones para caminar a la izquierda y derecha
 		walkLeft = new Animation();
-		walkLeft.addFrame("patoCaminaIzq1.png", 5);
-		walkLeft.addFrame("patoCaminaIzq2.png", 5);
-		walkLeft.addFrame("patoCaminaIzq3.png", 5);
-		walkLeft.addFrame("patoCaminaIzq4.png", 5);
-		walkLeft.addFrame("patoCaminaIzq5.png", 5);
-		walkLeft.addFrame("patoCaminaIzq6.png", 5);
-		walkLeft.addFrame("patoCaminaIzq7.png", 5);
-		walkLeft.addFrame("patoCaminaIzq8.png", 5);
+		walkLeft.addFrame("patoCaminaIzq1.png", FRAME);
+		walkLeft.addFrame("patoCaminaIzq2.png", FRAME);
+		walkLeft.addFrame("patoCaminaIzq3.png", FRAME);
+		walkLeft.addFrame("patoCaminaIzq4.png", FRAME);
+		walkLeft.addFrame("patoCaminaIzq5.png", FRAME);
+		walkLeft.addFrame("patoCaminaIzq6.png", FRAME);
+		walkLeft.addFrame("patoCaminaIzq7.png", FRAME);
+		walkLeft.addFrame("patoCaminaIzq8.png", FRAME);
 		walkLeft.setLooping(true);
 		
 		walkRight = new Animation();
-		walkRight.addFrame("patoCaminaDer1.png", 5);
-		walkRight.addFrame("patoCaminaDer2.png", 5);
-		walkRight.addFrame("patoCaminaDer3.png", 5);
-		walkRight.addFrame("patoCaminaDer4.png", 5);
-		walkRight.addFrame("patoCaminaDer5.png", 5);
-		walkRight.addFrame("patoCaminaDer6.png", 5);
-		walkRight.addFrame("patoCaminaDer7.png", 5);
-		walkRight.addFrame("patoCaminaDer8.png", 5);
+		walkRight.addFrame("patoCaminaDer1.png", FRAME);
+		walkRight.addFrame("patoCaminaDer2.png", FRAME);
+		walkRight.addFrame("patoCaminaDer3.png", FRAME);
+		walkRight.addFrame("patoCaminaDer4.png", FRAME);
+		walkRight.addFrame("patoCaminaDer5.png", FRAME);
+		walkRight.addFrame("patoCaminaDer6.png", FRAME);
+		walkRight.addFrame("patoCaminaDer7.png", FRAME);
+		walkRight.addFrame("patoCaminaDer8.png", FRAME);
 		walkRight.setLooping(true);
 		
+		// Animaciones de salto a la izquierda y derecha
+		jumpLeft = new Animation();
+		jumpLeft.addFrame("patoSaltoIzq1.png", FRAME);
+		jumpLeft.addFrame("patoSaltoIzq2.png", FRAME);
+		jumpLeft.setLooping(true);
+		
+		jumpRight = new Animation();
+		jumpRight.addFrame("patoSaltoDer1.png", FRAME);
+		jumpRight.addFrame("patoSaltoDer2.png", FRAME);
+		jumpRight.setLooping(true);
+		
+		// La animacion por default es volteando a la derecha
 		currentAnimation = walkRight;
+		
+		onGround = false;
+		facingRight = true;
 		
 		// Fijamos la aceleracion de la gravedad de forma permanente
 		accel.setY(GRAVITY);
@@ -67,11 +121,36 @@ public class Player extends GameObject implements KeyListener {
 	}
 
 	private void updateAnimations() {
-		if (vel.getX() > 0) {
-			currentAnimation = walkRight;
+		if (onGround) {
+			if (vel.getX() > 0) {
+				currentAnimation = walkRight;
+				if (!facingRight) {
+					facingRight = true;
+				}
+			}
+			else if (vel.getX() < 0) {
+				currentAnimation = walkLeft;
+				if (facingRight) {
+					facingRight = false;
+				}
+			}
+			else {
+				System.out.println("Animacion parado.");
+				currentAnimation = (facingRight ? standRight : standLeft);
+			}
 		}
-		else if (vel.getX() < 0) {
-			currentAnimation = walkLeft;
+		else {
+			if (vel.getX() > 0) {
+				if (!facingRight) {
+					facingRight = true;
+				}
+			}
+			else if (vel.getX() < 0) {
+				if (facingRight) {
+					facingRight = false;
+				}
+			}
+			currentAnimation = (facingRight ? jumpRight : jumpLeft);
 		}
 	}
 	
