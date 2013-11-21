@@ -18,6 +18,7 @@ public class GameWindow extends JFrame implements WindowListener {
 		
 		pack();
 		setVisible(true);
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		addWindowListener(this);
