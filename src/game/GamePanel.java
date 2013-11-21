@@ -47,7 +47,7 @@ public abstract class GamePanel extends JPanel implements Runnable {
 	protected volatile boolean running = false; // para terminar el thread de la animacion
 	protected volatile boolean isPaused = false; // para pausar
 	
-	private static final long period = 50; // tiempo en ms que debe tardar un solo frame de la animacion
+	private static final long period = 16; // tiempo en ms que debe tardar un solo frame de la animacion
 	private static final int NO_DELAYS_PER_YIELD = 100; // limite de "frames sin dormir" que debe de soportar la animacion
 	private static final int MAX_FRAME_SKIPS = 5; // limite de frames que se puede saltar la animacion cuando esta tardando mucho
 	
