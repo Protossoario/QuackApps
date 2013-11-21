@@ -110,7 +110,7 @@ public class QuackPanel extends GamePanel {
 		}
 
 		/* Calculamos el offset en X */
-		int offsetX = (int) (PWIDTH - (player.getPos().getX() + player.getWidth() / 2));
+		int offsetX = (int) (PWIDTH / 2 - (player.getPos().getX() + player.getWidth()));
 		int max_offsetX = PWIDTH - map.getWidth();
 		if (offsetX > 0) {
 			offsetX = 0;
@@ -120,7 +120,7 @@ public class QuackPanel extends GamePanel {
 		}
 		
 		/* Calculamos el offset en Y */
-		int offsetY = (int) (PHEIGHT - (player.getPos().getY() + player.getHeight() / 2));
+		int offsetY = (int) (PHEIGHT / 2 - (player.getPos().getY() + player.getHeight()));
 		int max_offsetY = PHEIGHT - map.getHeight();
 		if (offsetY > 0) {
 			offsetY = 0;
