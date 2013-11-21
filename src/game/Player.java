@@ -77,7 +77,6 @@ public class Player extends GameObject implements KeyListener {
 		vel.setY(vel.getY() + accel.getY());
 		
 		if (onGround) {
-			System.out.println("On ground.");
 			if (leftPressed && !rightPressed) {
 				vel.setX(-SPEED);
 			}

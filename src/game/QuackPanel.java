@@ -28,6 +28,8 @@ public class QuackPanel extends GamePanel {
 		player = new Player(this);
 		player.setPos(TileMap.tilesToPixels(3), 0);
 		map = new TileMap("level1.txt", this);
+		
+		addKeyListener(player);
 	}
 	
 	private void checkCollisions() {
@@ -67,6 +69,9 @@ public class QuackPanel extends GamePanel {
 		// No hubo colision en Y, asi que actualizamos su posicion en este eje
 		if (tile == null) {
 			player.getPos().setY(newY);
+			if (player.isOnGround()) {
+				player.setOnGround(false);
+			}
 		}
 		else {
 			// Si esta cayendo (moviendose hacia abajo), alinearlo al borde superior del tile
