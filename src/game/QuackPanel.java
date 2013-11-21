@@ -14,6 +14,7 @@ import tiles.TileMap;
 
 @SuppressWarnings("serial")
 public class QuackPanel extends GamePanel {
+	private static final String BACKGROUND = "fondo.png";
 	private Player player;
 	private TileMap map;
 	private Graphics dbg;
@@ -131,6 +132,14 @@ public class QuackPanel extends GamePanel {
 		
 		dbg.setColor(Color.WHITE);
 		dbg.fillRect(0, 0, PWIDTH, PHEIGHT);
+		
+		/* Pintar el fondo con parallaxing */
+		BufferedImage background = imageL.getImage(BACKGROUND);
+		int bgX = offsetX *
+				(PWIDTH - background.getWidth()) /
+				(PWIDTH - TileMap.tilesToPixels(map.getWidth()));
+		int bgY = PHEIGHT - background.getHeight();
+		dbg.drawImage(background, bgX, bgY, this);
 		
 		/* Pintar los tiles visibles */
 		int fromTileX = TileMap.pixelsToTiles(-offsetX);
