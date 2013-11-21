@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import sound.ClipsLoader;
 import sound.MidisLoader;
@@ -27,8 +28,9 @@ public class QuackPanel extends GamePanel {
 		midisL = new MidisLoader("sounds.txt");
 		
 		player = new Player(this);
-		player.setPos(TileMap.tilesToPixels(3), 0);
 		map = new TileMap("level1.txt", this);
+		Point playerSpawn = map.getPlayerSpawn();
+		player.setPos(TileMap.tilesToPixels(playerSpawn.x), TileMap.tilesToPixels(playerSpawn.y));
 		
 		addKeyListener(player);
 	}
@@ -104,6 +106,12 @@ public class QuackPanel extends GamePanel {
 		player.update();
 		checkCollisions();
 	}
+	
+	private void renderHUD(Graphics g) {
+		g.drawImage(imageL.getImage("aluminioIcon.png"), 0, 0, this);
+		g.setColor(Color.WHITE);
+		g.drawString("X 0", 35, 30);
+	}
 
 	protected void gameRender() {
 		if (dbImage == null) { // inicializar la imagen buffer si es que no lo esta
@@ -164,9 +172,35 @@ public class QuackPanel extends GamePanel {
 			}
 		}
 		
+		/* Pintar al bote de basura */
+		Point trashCanTile = map.getTrashCanTile();
+		if (trashCanTile.x >= fromTileX && trashCanTile.x <= toTileX &&
+				trashCanTile.y >= fromTileY && trashCanTile.y <= toTileY) {
+			int drawX = TileMap.tilesToPixels(trashCanTile.x) + offsetX;
+			int drawY = TileMap.tilesToPixels(trashCanTile.y) + offsetY;
+			dbg.drawImage(imageL.getImage("boteAluminio.png"),
+							drawX,
+							drawY, this);
+		}
+		
 		/* Pintar al jugador */
 		dbg.drawImage(player.getCurrentImage(),
 					(int) (player.getPos().getX() + offsetX),
 					(int) (player.getPos().getY() + offsetY), this);
+		
+		/* Pintar los pedazos de basura */
+		ArrayList <Point> trashPieces = map.getTrashTiles();
+		for (Point trash : trashPieces) {
+			if (trash.x >= fromTileX && trash.x <= toTileX &&
+				trash.y >= fromTileY && trash.y <= toTileY) {
+				int drawX = TileMap.tilesToPixels(trash.x) + offsetX;
+				int drawY = TileMap.tilesToPixels(trash.y) + offsetY;
+				dbg.drawImage(imageL.getImage("basuraAluminio.png"),
+								drawX,
+								drawY, this);
+			}
+		}
+		
+		renderHUD(dbg);
 	}
 }

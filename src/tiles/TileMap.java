@@ -19,6 +19,10 @@ public class TileMap {
 	// Guarda las imagenes de los tiles
 	private ArrayList <BufferedImage> tiles;
 	
+	private Point playerSpawn;
+	private Point trashCanTile;
+	private ArrayList <Point> trashTiles;
+	
 	// Matriz bidimensional que guarda el numero de tile que corresponde al subindice (i, j)
 	// Para cada subindice, se guarda un numero (0, 1, 2, etc.) que indica el numero de tile que es
 	// De lo contrario, se marca con un -1 los espacios vacios
@@ -94,6 +98,15 @@ public class TileMap {
 				if (line.charAt(x) >= 'A' && line.charAt(x) <= 'Z') {
 					map[x][y] = line.charAt(x) - 'A';
 				}
+				else if (line.charAt(x) == '*') {
+					playerSpawn = new Point(x, y);
+				}
+				else if (line.charAt(x) == '1') {
+					trashCanTile = new Point(x, y);
+				}
+				else if (line.charAt(x) == '!') {
+					trashTiles.add(new Point(x, y));
+				}
 			}
 		}
 	}
@@ -131,8 +144,10 @@ public class TileMap {
 	 * @param file Es el nombre del archivo de texto de donde se leera la informacion del tilemap
 	 */
 	public TileMap(String file, GamePanel gp) {
-		loadMap("maps/" + file);
 		tiles = new ArrayList <BufferedImage> ();
+		trashTiles = new ArrayList <Point> ();
+		
+		loadMap("maps/" + file);
 		getTiles(gp.getImageLoader());
 	}
 	
@@ -151,5 +166,17 @@ public class TileMap {
 			return null;
 		}
 		return tiles.get(map[x][y]);
+	}
+	
+	public Point getPlayerSpawn() {
+		return playerSpawn;
+	}
+	
+	public Point getTrashCanTile() {
+		return trashCanTile;
+	}
+	
+	public ArrayList<Point> getTrashTiles() {
+		return trashTiles;
 	}
 }

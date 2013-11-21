@@ -1,14 +1,23 @@
+# A es tierra
+# B es tierra con pasto
+# C es el borde izquierdo de la nube
+# D es el centro de la nube
+# E es el borde derecho de la nube
+# * es la posicion inicial del jugador
+# 1 es la posicion del bote de basura
+# ! es la posicion de la basura
 
 
-                                        CDDDDE
+
+                                !       CDDDDE
                               CDDDDE
 
-                      BBBBBB                     CDDDDE
+                      BBBBBB              1      CDDDDE
                              CE         CDDDDE            BBB
-                                BB                        AAA
-                BBBBB           AA                     BBBAAA
-               BAAAAA           AABBBB            BB
+                 ! !            BB                        AAA
+                BBBBB           AA!!!             !    BBBAAA
+               BAAAAA           AABBBB           !BB
               BAAAAAABB                         BBAA
-             BAAAAAAAAA                       BBAAAA
+  *      !   BAAAAAAAAA     ! ! ! ! !         BBAAAA
 BBBBBBBBBBBBBAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBAAAAAABBBBBBBBBBBBB
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
