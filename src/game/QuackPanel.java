@@ -3,11 +3,15 @@ package game;
 import image.ImageLoader;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import sound.ClipsLoader;
 import sound.MidisLoader;
@@ -16,9 +20,17 @@ import tiles.TileMap;
 @SuppressWarnings("serial")
 public class QuackPanel extends GamePanel {
 	private static final String BACKGROUND = "fondo.png";
+	private static final String FONTS_DIR = "fonts/";
+	private static final String HUD_FONT = "FromWhereYouAre.ttf";
+	
+	private static final float HUD_FONT_SIZE = 20f;
+	
 	private Player player;
 	private TileMap map;
 	private Graphics dbg;
+	private Font HUDFont;
+	
+	private int collectedTrash;
 	
 	public QuackPanel() {
 		super();
@@ -32,7 +44,21 @@ public class QuackPanel extends GamePanel {
 		Point playerSpawn = map.getPlayerSpawn();
 		player.setPos(TileMap.tilesToPixels(playerSpawn.x), TileMap.tilesToPixels(playerSpawn.y));
 		
+		// Crear las fonts
+		try {
+			HUDFont = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getClassLoader().getResourceAsStream(FONTS_DIR + HUD_FONT));
+			HUDFont = HUDFont.deriveFont(HUD_FONT_SIZE);
+		} catch (FontFormatException e) {
+			System.out.println("Error al leer la Font del HUD.");
+			System.out.println(e);
+		} catch (IOException e) {
+			System.out.println("Error al leer la Font del HUD.");
+			System.out.println(e);
+		}
+		
 		addKeyListener(player);
+		
+		collectedTrash = 0;
 	}
 	
 	private void checkCollisions() {
@@ -102,15 +128,49 @@ public class QuackPanel extends GamePanel {
 		}
 	}
 	
+	private void checkTrash() {
+		int fromTileX = TileMap.pixelsToTiles(player.getPos().getX());
+		int fromTileY = TileMap.pixelsToTiles(player.getPos().getY());
+		int toTileX = TileMap.pixelsToTiles(player.getPos().getX() + player.getWidth());
+		int toTileY = TileMap.pixelsToTiles(player.getPos().getY() + player.getHeight());
+		
+		ArrayList <Point> trashPieces = map.getTrashTiles();
+		Iterator <Point> iter = trashPieces.listIterator();
+		while (iter.hasNext()) {
+			Point trash = iter.next();
+			for (int x = fromTileX; x <= toTileX; x++) {
+				for (int y = fromTileY; y <= toTileY; y++) {
+					if (trash.x == x && trash.y == y) {
+						collectedTrash++;
+						iter.remove();
+					}
+				}
+			}
+		}
+		
+		Point trashCan = map.getTrashCanTile();
+		for (int x = fromTileX; x <= toTileX; x++) {
+			for (int y = fromTileY; y <= toTileY; y++) {
+				if (trashCan.x == x && trashCan.y == y) {
+					collectedTrash = 0;
+				}
+			}
+		}
+	}
+	
 	protected void gameUpdate() {
 		player.update();
 		checkCollisions();
+		checkTrash();
 	}
 	
 	private void renderHUD(Graphics g) {
 		g.drawImage(imageL.getImage("aluminioIcon.png"), 0, 0, this);
-		g.setColor(Color.WHITE);
-		g.drawString("X 0", 35, 30);
+		if (HUDFont != null) {
+			g.setFont(HUDFont);
+		}
+		g.setColor(Color.BLACK);
+		g.drawString("X " + collectedTrash, 35, 30);
 	}
 
 	protected void gameRender() {
