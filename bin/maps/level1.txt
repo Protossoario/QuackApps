@@ -1,10 +1,10 @@
 
 
-                                        BBBBBB
-                              BBBBBB
+                                        CDDDDE
+                              CDDDDE
 
-                      BBBBBB                     BBBBBB
-                             BB         BBBBBB            BBB
+                      BBBBBB                     CDDDDE
+                             CE         CDDDDE            BBB
                                 BB                        AAA
                 BBBBB           AA                     BBBAAA
                BAAAAA           AABBBB            BB

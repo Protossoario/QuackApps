@@ -37,3 +37,6 @@ patoSaltoIzq1.png
 patoSaltoIzq2.png
 tile_0.png
 tile_1.png
+tile_2.png
+tile_3.png
+tile_4.png
