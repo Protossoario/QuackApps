@@ -16,9 +16,13 @@ public class Player extends GameObject implements KeyListener {
 	private boolean upPressed;
 	private boolean onGround;
 	
-	private static final double GRAVITY = 1;
-	private static final double SPEED = 5;
-	private static final int JUMP = 10;
+	private static final double GRAVITY = 0.5;
+	private static final double MAX_FALL = 10;
+	private static final double GROUND_ACCEL = 0.5;
+	private static final double AIR_ACCEL = 0.25;
+	private static final double MAX_SPEED = 10;
+	private static final double FRICTION = 0.75;
+	private static final double JUMP = 10;
 	
 	Player(GamePanel gp) {
 		super(gp);
@@ -74,19 +78,53 @@ public class Player extends GameObject implements KeyListener {
 	public void update() {
 		currentAnimation.updateAnimation();
 		
-		vel.setY(vel.getY() + accel.getY());
-		
 		if (onGround) {
 			if (leftPressed && !rightPressed) {
-				vel.setX(-SPEED);
+				accel.setX(-GROUND_ACCEL);
 			}
 			else if (!leftPressed && rightPressed) {
-				vel.setX(SPEED);
+				accel.setX(GROUND_ACCEL);
+			}
+			else {
+				if (vel.getX() > 0) {
+					accel.setX(Math.max(-vel.getX(), -FRICTION));
+				}
+				else if (vel.getX() < 0) {
+					accel.setX(Math.min(-vel.getX(), FRICTION));
+				}
+				else {
+					accel.setX(0);
+				}
 			}
 			
 			if (upPressed) {
 				vel.setY(-JUMP);
 			}
+		}
+		else {
+			if (leftPressed && !rightPressed) {
+				accel.setX(-AIR_ACCEL);
+			}
+			else if (!leftPressed && rightPressed) {
+				accel.setX(AIR_ACCEL);
+			}
+			else {
+				accel.setX(0);
+			}
+			
+			vel.setY(vel.getY() + accel.getY());
+		}
+		
+		vel.setX(vel.getX() + accel.getX());
+		if (vel.getX() > MAX_SPEED) {
+			vel.setX(MAX_SPEED);
+		}
+		else if (vel.getX() < -MAX_SPEED) {
+			vel.setX(-MAX_SPEED);
+		}
+		
+		if (vel.getY() > MAX_FALL) {
+			vel.setY(MAX_FALL);
 		}
 		
 		updateAnimations();
