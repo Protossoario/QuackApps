@@ -1,9 +1,14 @@
 
 
+                                        BBBBBB
+                              BBBBBB
 
-
-
-
-
-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+                      BBBBBB                     BBBBBB
+                             BB         BBBBBB            BBB
+                                BB                        AAA
+                BBBBB           AA                     BBBAAA
+               BAAAAA           AABBBB            BB
+              BAAAAAABB                         BBAA
+             BAAAAAAAAA                       BBAAAA
+BBBBBBBBBBBBBAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBAAAAAABBBBBBBBBBBBB
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA

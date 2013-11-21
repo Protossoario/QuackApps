@@ -22,7 +22,7 @@ public class Player extends GameObject implements KeyListener {
 	private static final double AIR_ACCEL = 0.25;
 	private static final double MAX_SPEED = 10;
 	private static final double FRICTION = 0.75;
-	private static final double JUMP = 10;
+	private static final double JUMP = 12.5;
 	
 	Player(GamePanel gp) {
 		super(gp);
