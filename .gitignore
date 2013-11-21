@@ -7,4 +7,12 @@
 
 .classpath
 
+*.xml
+
+*.mf
+
+*.properties
+
 *.swp
+/QuackApps/nbproject/private/
+/nbproject/private/
