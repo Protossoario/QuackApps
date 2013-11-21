@@ -1,0 +1,2 @@
+coins coins.wav
+pickup pickup.wav

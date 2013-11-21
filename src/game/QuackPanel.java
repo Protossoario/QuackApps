@@ -23,6 +23,10 @@ public class QuackPanel extends GamePanel {
 	private static final String FONTS_DIR = "fonts/";
 	private static final String HUD_FONT = "FromWhereYouAre.ttf";
 	
+	private static final String MUSIC = "overworld";
+	private static final String PICKUP = "pickup";
+	private static final String COINS = "coins";
+	
 	private static final float HUD_FONT_SIZE = 20f;
 	
 	private Player player;
@@ -36,8 +40,8 @@ public class QuackPanel extends GamePanel {
 		super();
 		
 		imageL = new ImageLoader("images.txt");
-		clipsL = new ClipsLoader("sounds.txt");
-		midisL = new MidisLoader("sounds.txt");
+		clipsL = new ClipsLoader("clips.txt");
+		midisL = new MidisLoader("midis.txt");
 		
 		player = new Player(this);
 		map = new TileMap("level1.txt", this);
@@ -59,6 +63,8 @@ public class QuackPanel extends GamePanel {
 		addKeyListener(player);
 		
 		collectedTrash = 0;
+		
+		midisL.play(MUSIC, true);
 	}
 	
 	private void checkCollisions() {
@@ -143,6 +149,7 @@ public class QuackPanel extends GamePanel {
 					if (trash.x == x && trash.y == y) {
 						collectedTrash++;
 						iter.remove();
+						clipsL.play(PICKUP, false);
 					}
 				}
 			}
@@ -151,8 +158,9 @@ public class QuackPanel extends GamePanel {
 		Point trashCan = map.getTrashCanTile();
 		for (int x = fromTileX; x <= toTileX; x++) {
 			for (int y = fromTileY; y <= toTileY; y++) {
-				if (trashCan.x == x && trashCan.y == y) {
+				if (trashCan.x == x && trashCan.y == y && collectedTrash > 0) {
 					collectedTrash = 0;
+					clipsL.play(COINS, false);
 				}
 			}
 		}
