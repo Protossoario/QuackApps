@@ -45,7 +45,9 @@ public class TileMap {
 		
 		for (int x = fromTileX; x <= toTileX; x++) {
 			for (int y = fromTileY; y <= toTileY; y++) {
-				if (x < 0 || x >= getWidth() || map[x][y] != EMPTY_TILE) {
+				if ((x < 0 || x >= map.length) ||
+					(y < 0 || y >= map[0].length) ||
+					map[x][y] != EMPTY_TILE) {
 					return new Point(x, y);
 				}
 			}
@@ -78,19 +80,20 @@ public class TileMap {
 			System.out.println("Error al leer el archivo del mapa: " + fname);
 		}
 		
-		map = new int[lines.size()][max_length];
+		map = new int[max_length][lines.size()];
 		
-		for (int i = 0; i < lines.size(); i++) {
-			String line = lines.get(i);
-			int j;
-			for (j = 0; j < line.length(); j++) {
-				if (line.charAt(j) >= 'A' && line.charAt(j) <= 'Z') {
-					map[i][j] = line.charAt(j) - 'A';
-				}
-			}
-			
-			for ( ; j < max_length; j++) {
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[i].length; j++) {
 				map[i][j] = EMPTY_TILE;
+			}
+		}
+		
+		for (int y = 0; y < lines.size(); y++) {
+			String line = lines.get(y);
+			for (int x = 0; x < line.length(); x++) {
+				if (line.charAt(x) >= 'A' && line.charAt(x) <= 'Z') {
+					map[x][y] = line.charAt(x) - 'A';
+				}
 			}
 		}
 	}
@@ -134,15 +137,17 @@ public class TileMap {
 	}
 	
 	public int getWidth() {
-		return map[0].length;
-	}
-	
-	public int getHeight() {
 		return map.length;
 	}
 	
+	public int getHeight() {
+		return map[0].length;
+	}
+	
 	public BufferedImage getTileImage(int x, int y) {
-		if (map[x][y] == EMPTY_TILE) {
+		if ((x < 0 || x >= map.length) ||
+			(y < 0 || y >= map[0].length) ||
+			map[x][y] == EMPTY_TILE) {
 			return null;
 		}
 		return tiles.get(map[x][y]);

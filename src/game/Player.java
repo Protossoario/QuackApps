@@ -77,6 +77,7 @@ public class Player extends GameObject implements KeyListener {
 		vel.setY(vel.getY() + accel.getY());
 		
 		if (onGround) {
+			System.out.println("On ground.");
 			if (leftPressed && !rightPressed) {
 				vel.setX(-SPEED);
 			}
@@ -90,8 +91,6 @@ public class Player extends GameObject implements KeyListener {
 		}
 		
 		updateAnimations();
-		
-		pos = pos.add(vel);
 	}
 	
 	public boolean isOnGround() {
@@ -104,6 +103,11 @@ public class Player extends GameObject implements KeyListener {
 	
 	public BufferedImage getCurrentImage() {
 		return imageL.getImage(currentAnimation.getCurrentSprite());
+	}
+	
+	public void setPos(double X, double Y) {
+		pos.setX(X);
+		pos.setY(Y);
 	}
 
 	public void keyTyped(KeyEvent e) {

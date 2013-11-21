@@ -2,6 +2,7 @@ package game;
 
 import image.ImageLoader;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -25,6 +26,7 @@ public class QuackPanel extends GamePanel {
 		midisL = new MidisLoader("sounds.txt");
 		
 		player = new Player(this);
+		player.setPos(TileMap.tilesToPixels(3), 0);
 		map = new TileMap("level1.txt", this);
 	}
 	
@@ -51,6 +53,8 @@ public class QuackPanel extends GamePanel {
 				newX = TileMap.tilesToPixels(tile.x + 1);
 				player.getPos().setX(newX);
 			}
+			
+			player.getVel().setX(0);
 		}
 		
 		/* Lo mismo para la posicion en Y */
@@ -78,6 +82,8 @@ public class QuackPanel extends GamePanel {
 				newY = TileMap.tilesToPixels(tile.y + 1);
 				player.getPos().setY(newY);
 			}
+			
+			player.getVel().setY(0);
 		}
 	}
 	
@@ -117,6 +123,9 @@ public class QuackPanel extends GamePanel {
 		else if (offsetY < max_offsetY) {
 			offsetY = max_offsetY;
 		}
+		
+		dbg.setColor(Color.WHITE);
+		dbg.fillRect(0, 0, PWIDTH, PHEIGHT);
 		
 		/* Pintar los tiles visibles */
 		int fromTileX = TileMap.pixelsToTiles(-offsetX);
