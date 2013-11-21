@@ -135,7 +135,6 @@ public class Player extends GameObject implements KeyListener {
 				}
 			}
 			else {
-				System.out.println("Animacion parado.");
 				currentAnimation = (facingRight ? standRight : standLeft);
 			}
 		}
