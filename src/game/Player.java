@@ -22,10 +22,10 @@ public class Player extends GameObject implements KeyListener {
 	private boolean facingRight;
 	
 	private static final double GRAVITY = 0.5;
-	private static final double MAX_FALL = 10;
+	private static final double MAX_FALL = 10; //Maxima velocidad para caida
 	private static final double GROUND_ACCEL = 0.5;
-	private static final double AIR_ACCEL = 0.25;
-	private static final double MAX_SPEED = 10;
+	private static final double AIR_ACCEL = 0.25; //Modifica la velocidad horizontal durante el salto
+	private static final double MAX_SPEED = 10; //Modifica la velocidad maxima horizontal que puede alcanzar el pato
 	private static final double FRICTION = 0.75;
 	private static final double JUMP = 12.5;
 	
