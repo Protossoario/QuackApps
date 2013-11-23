@@ -21,6 +21,8 @@ public class Player extends GameObject implements KeyListener {
 	private boolean onGround;
 	private boolean facingRight;
 	
+	private int lives;
+	
 	private static final double GRAVITY = 0.5;
 	private static final double MAX_FALL = 10; //Maxima velocidad para caida
 	private static final double GROUND_ACCEL = 0.5;
@@ -31,6 +33,8 @@ public class Player extends GameObject implements KeyListener {
 	
 	private static final int FRAME = 5;
 	private static final int SECOND = 60;
+	private static final int MAX_LIVES = 5;
+	private static final int START_LIVES = 3;
 	
 	Player(GamePanel gp) {
 		super(gp);
@@ -113,6 +117,9 @@ public class Player extends GameObject implements KeyListener {
 		BufferedImage img = imageL.getImage(currentAnimation.getCurrentSprite());
 		width = img.getWidth();
 		height = img.getHeight();
+		
+		// Inicializamos las vidas
+		lives = START_LIVES;
 	}
 
 	public Rectangle getCollisionRect() {
