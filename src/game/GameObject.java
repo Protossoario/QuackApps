@@ -97,6 +97,18 @@ public abstract class GameObject {
 	}
 	
 	/**
+	 * Este metodo lo llama el objeto GamePanel al hacer el render
+	 * de la pantalla de juego; aqui es donde se pinta al personaje
+	 * en base al sprite correspondiente y el offset en X y Y para el scrolling.
+	 */
+	public void paint(Graphics g, int offsetX, int offsetY) {
+		BufferedImage im = imageL.getImage(currentAnimation.getCurrentSprite());
+		if (im != null) {
+			g.drawImage(im, (int) pos.getX() + offsetX, (int) pos.getY() + offsetY, null);
+		}
+	}
+	
+	/**
 	 * Getters y setters para las variables de la clase
 	 */
 	public Vector getPos() {
@@ -170,4 +182,5 @@ public abstract class GameObject {
 	public void setMarkedForDeletion(boolean marked) {
 		this.marked = marked;
 	}
+	
 }

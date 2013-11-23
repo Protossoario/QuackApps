@@ -19,7 +19,7 @@ import tiles.TileMap;
 
 @SuppressWarnings("serial")
 public class QuackPanel extends GamePanel {
-	private static final String BACKGROUND = "fondo.png";
+	private static final String BACKGROUND = "fondo2.png";
 	private static final String FONTS_DIR = "fonts/";
 	private static final String HUD_FONT = "FromWhereYouAre.ttf";
 	

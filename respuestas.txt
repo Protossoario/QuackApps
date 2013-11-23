@@ -1,0 +1,67 @@
+
+1. Donde se maneja el movimiento del jugador
+	R: metodo update(), se utilizan vectores de aceleracion velocidad y posicion, se utiliza friccion para der un efecto de desalereacion (que se resbala), cuando comienza a moverse el pato se acelera hasta su MAX_SPEED, tambien se puede mover en el aire pero su aceleracion horizontal en el aire depende de AIR_ACCEL 
+
+	
+2. Donde se recibe el input del teclado para mover al jugador?
+	R: metodo KeyPressed(KeyEvent e), el jugador se mueve utilizando las teclas arriba, izquierda y derecha, primero se prende un booleano correspondiente en cada flecha que se utiliza en el metodo update() para mover al pato, otro metodo relacionado el input es keyReleased(KeyEvent e) donde se apaga el booleano de la tecla cuando se suelta la flecha (leftPressed, rightPressed, upPressed)
+
+3. Donde se manejan colisiones entre jugador y plataformas/tierra?
+	R: metodo checkColisiones en el clase QuackPanel.java, las colisiones para X y Y se checan individualmente pero de la misma manera, es calcula cual sera la siguiente posicion del pato de acuerdo a su velocidad actual y si hay una colision en su siguiente movimiento se mueve correspondientemente depiendendo del eje y de su velocidad ( a la izquierda de un tile si tiene velocidadX positiva, derecha de un tile si tiene velocidadX negativa para X, arriba si velocidadY < 0 o abajo de un tile si vY > 0 para Y )
+	el metodo de colisiones esta tomado de las clases de brackeen y tambien incluye otros metodos de la clase TileMap.java y TileMapRenderer.java
+
+4. Donde se maneja la recoleccion de basura?
+	R: en el metodo checkTrash() en la clase QuackPanel.java, se calculan los offsets del scrolling del pato con 
+
+	int fromTileX = TileMap.pixelsToTiles(player.getPos().getX());
+		int fromTileY = TileMap.pixelsToTiles(player.getPos().getY());
+		int toTileX = TileMap.pixelsToTiles(player.getPos().getX() + player.getWidth());
+		int toTileY = TileMap.pixelsToTiles(player.getPos().getY() + player.getHeight());
+
+	despues se obtiene cuantas tiles de trashPieces y trashCan hay usando el metodo map.getTrashTiles() y map.getTrashCanTile() de TileMap.java,
+	con esto ahora se puede recorrer ambas ArrayLists con su respectivo iterador y cuando los offsets esten centrados con una trashPieces o trashCan
+	cuenta como una colision y se toma la accion correspondiente para trashPieces(se recoge) o trashCan (se tira en el bote).
+
+5. Donde se guerda la informacion del bote de basura?
+	R: La informacion del bote de basura esta en las clases TileMap.java, se guarda su como un point, y la manera en la que se representa en el archivo de texto para el mapa
+	(caracter '1'),  
+
+6. Y de las latas de aluminio?
+	R: La respuesta es identica a la pregunta anterior, pero trashPieces se guarda como una array list de points y su caracter para representarla en el mapa es '!', la cantidad de trashPieces acumuladas se guarda como int collectedTrash en la clase QuackPanel.java
+
+7. Donde se manejan las fisicas del jugador? es lo mismo que el movimiento
+	R: Las fisicas del jugador estan en el metodo update() y se rigen por las constantes GRAVITY, MAX_FALL, GROUND_ACCEL, AIR_ACCEL, MAX_SPEED, FRICTION y JUMP, en la clase Player.java, no es lo mismo que el manejo de movimiento sino que es solo un parte, las fisicas tambien incluyen las colisiones con las tiles del juego y con los otros elementos (trashPieces y trashCan)
+
+
+8. como modificas las fisicas del jugador para que:
+	a. Salte mas alto
+		R: cambiando la constante JUMP en la clase Player.java, otra manera de hacerlo, sin embargo no la correcta, es bajando el valor de la constante GRAVITY
+
+	b.corra mas rapido
+		R: Aumentando el valor de la constante MAX_SPEED en la clase Player.java
+
+	c. se detenga mas rapido
+		R: Aumentando el valor de la variable FRICTION en la clase Player.java
+
+	d. se resbale mas
+		R: Bajando el valor de la constante FRICTION en la clase Player.java
+
+9. Como cambio la imagen de fondo?
+	R: primero se pone la nueva imagen de fondo en el directorio de "images/" ,luego se agrega el nombre de la imagen en el archivo de texto "images.txt"
+	por ultimo se cambia el valor string de la constante BACKGROUND en la clase QuackPanel.java para que sea el nombre de la nueva imagen de fondo
+
+10. Como cambio los sprites del jugador?
+	R: Se ponen los nuevos sprites en el directorio "images/", se ponen los nombres de los nuevos sprites en el archivo de texto "images.txt", luego se pueden agregar esas imagenes a animaciones ya existentes del jugador con el metodo
+	Animation.addFrame("nombreDelSperite", duracion), reemplazar sprites ya existentes en animaciones por las nuevos sprites cambiando el nombre, o crear nuevas animaciones con los nuevos sprites.
+
+11. Como hago que la animacion de caminar del jugador sea mas lenta?
+	R: se aumenta el valor de duracion de todas las frames en el segundo parametro del metodo Animacion.addFrame("nombreDelString", duracion)
+
+12. Como reproduzco un sonido? y una cancion MIDI?
+	R: suponiendo que ya existe el archivo de sonido o el MIDI (poner archivo en directorio "sounds/ ", especificar nombre del archivo en el archivo de texto que carga recursos "clips.txt" p "midis.txt" y crear variables ClipsLoader y MidisLoader con el respectivo archivo de texto para MIDIS y sonido)
+	se utiliza el metodo clipsL.play("nombreDelSonido") de la clasas ClipsLoader.java para reproducir un sonido
+	midisL.play("nombreDelMIDI") de la clase MidisLoader.java para reproducir un MIDI.
+
+13. Modificando el archivo de texto que corresponde al mapa en el directorio "maps/levelx.txt" y agregando mas caracteres que corresponden a trashPieces (caracter '!')
+
+14. Modificando el archivo de texto que corresponde al mapa en el directorio "maps/levelx.txt" y cambiar la posicion de bote de basura, donde el caracter del bote de basura es '1'.
