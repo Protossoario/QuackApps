@@ -4,20 +4,23 @@
 # D es el centro de la nube
 # E es el borde derecho de la nube
 # * es la posicion inicial del jugador
-# 1 es la posicion del bote de basura
-# ! es la posicion de la basura
+# a es el bote de basura tipo 1
+# b es el bote de basura tipo 2
+# c es el bote de basura tipo 3
+# 1 es la basura tipo 1
+# 2 es la basura tipo 2
+# 3 es la basura tipo 3
 
 
-
-                                !       CDDDDE
+                                1       CDDDDE
                               CDDDDE
 
-                      BBBBBB              1      CDDDDE
+                      BBBBBB              a      CDDDDE
                              CE         CDDDDE            BBB
-                 ! !            BB                        AAA
-                BBBBB           AA!!!             !    BBBAAA
-               BAAAAA           AABBBB           !BB
+                 1 1            BB                        AAA
+                BBBBB           AA111             1    BBBAAA
+               BAAAAA           AABBBB           1BB
               BAAAAAABB                         BBAA
-  *      !   BAAAAAAAAA     ! ! ! ! !         BBAAAA
+  *      1   BAAAAAAAAA     1 1 1 1 1         BBAAAA
 BBBBBBBBBBBBBAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBAAAAAABBBBBBBBBBBBB
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA

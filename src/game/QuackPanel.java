@@ -140,7 +140,7 @@ public class QuackPanel extends GamePanel {
 		int toTileX = TileMap.pixelsToTiles(player.getPos().getX() + player.getWidth());
 		int toTileY = TileMap.pixelsToTiles(player.getPos().getY() + player.getHeight());
 		
-		ArrayList <Point> trashPieces = map.getTrashTiles();
+		ArrayList <Point> trashPieces = map.getTrashTiles(0);
 		Iterator <Point> iter = trashPieces.listIterator();
 		while (iter.hasNext()) {
 			Point trash = iter.next();
@@ -155,7 +155,7 @@ public class QuackPanel extends GamePanel {
 			}
 		}
 		
-		Point trashCan = map.getTrashCanTile();
+		Point trashCan = map.getTrashCanTile(0);
 		for (int x = fromTileX; x <= toTileX; x++) {
 			for (int y = fromTileY; y <= toTileY; y++) {
 				if (trashCan.x == x && trashCan.y == y && collectedTrash > 0) {
@@ -241,7 +241,7 @@ public class QuackPanel extends GamePanel {
 		}
 		
 		/* Pintar al bote de basura */
-		Point trashCanTile = map.getTrashCanTile();
+		Point trashCanTile = map.getTrashCanTile(0);
 		if (trashCanTile.x >= fromTileX && trashCanTile.x <= toTileX &&
 				trashCanTile.y >= fromTileY && trashCanTile.y <= toTileY) {
 			int drawX = TileMap.tilesToPixels(trashCanTile.x) + offsetX;
@@ -257,7 +257,7 @@ public class QuackPanel extends GamePanel {
 					(int) (player.getPos().getY() + offsetY), this);
 		
 		/* Pintar los pedazos de basura */
-		ArrayList <Point> trashPieces = map.getTrashTiles();
+		ArrayList <Point> trashPieces = map.getTrashTiles(0);
 		for (Point trash : trashPieces) {
 			if (trash.x >= fromTileX && trash.x <= toTileX &&
 				trash.y >= fromTileY && trash.y <= toTileY) {
