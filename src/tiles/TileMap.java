@@ -15,13 +15,22 @@ import java.util.ArrayList;
 public class TileMap {
 	private static final int TILE_SIZE = 64;
 	private static final int EMPTY_TILE = -1;
+	private static final int FIRST_TILE = 'A';
+	private static final int LAST_TILE = 'Z';
+	private static final int FIRST_TRASHCAN = 'a';
+	private static final int LAST_TRASHCAN = 'z';
+	private static final int FIRST_TRASH = '1';
+	private static final int LAST_TRASH = '9';
 	
 	// Guarda las imagenes de los tiles
 	private ArrayList <BufferedImage> tiles;
 	
 	private Point playerSpawn;
-	private Point trashCanTile;
-	private ArrayList <Point> trashTiles;
+	// Guarda las posiciones de cada tipo de bote de basura
+	private ArrayList <Point> trashCanTiles;
+	// Arreglo de Points de dos dimensiones
+	// Guarda las posiciones de todos los pedazos de basura, para cada tipo de basura
+	private ArrayList <ArrayList <Point>> trashTiles;
 	
 	// Matriz bidimensional que guarda el numero de tile que corresponde al subindice (i, j)
 	// Para cada subindice, se guarda un numero (0, 1, 2, etc.) que indica el numero de tile que es
@@ -60,6 +69,18 @@ public class TileMap {
 		return null;
 	}
 	
+	private boolean isSolidTile(char tile) {
+		return tile >= FIRST_TILE && tile <= LAST_TILE;
+	}
+	
+	private boolean isTrashCanTile(char tile) {
+		return tile >= FIRST_TRASHCAN && tile <= LAST_TRASHCAN;
+	}
+	
+	private boolean isTrashTile(char tile) {
+		return tile >= FIRST_TRASH && tile <= LAST_TRASH;
+	}
+	
 	/**
 	 * Metodo para leer el archivo de texto y cargar los datos a la matriz de enteros
 	 * @param fname Indica el nombre del archivo a leer, con su directorio
@@ -95,18 +116,20 @@ public class TileMap {
 		for (int y = 0; y < lines.size(); y++) {
 			String line = lines.get(y);
 			for (int x = 0; x < line.length(); x++) {
-				if (line.charAt(x) >= 'A' && line.charAt(x) <= 'Z') {
+				if (isSolidTile(line.charAt(x))) {
 					map[x][y] = line.charAt(x) - 'A';
+				}
+				else if (isTrashCanTile(line.charAt(x))) {
+					trashCanTiles.add(new Point(x, y));
+				}
+				else if (isTrashTile(line.charAt(x))) {
+					int trashInd = line.charAt(x) - FIRST_TRASH;
+					trashTiles.get(trashInd).add(new Point(x, y));
 				}
 				else if (line.charAt(x) == '*') {
 					playerSpawn = new Point(x, y);
 				}
-				else if (line.charAt(x) == '1') {
-					trashCanTile = new Point(x, y);
-				}
-				else if (line.charAt(x) == '!') {
-					trashTiles.add(new Point(x, y));
-				}
+
 			}
 		}
 	}
@@ -145,7 +168,11 @@ public class TileMap {
 	 */
 	public TileMap(String file, GamePanel gp) {
 		tiles = new ArrayList <BufferedImage> ();
-		trashTiles = new ArrayList <Point> ();
+		trashCanTiles = new ArrayList <Point> ();
+		trashTiles = new ArrayList <ArrayList <Point>> ();
+		for (int i = 0; i < 3; i++) {
+			trashTiles.add(new ArrayList <Point>());
+		}
 		
 		loadMap("maps/" + file);
 		getTiles(gp.getImageLoader());
@@ -172,11 +199,11 @@ public class TileMap {
 		return playerSpawn;
 	}
 	
-	public Point getTrashCanTile() {
-		return trashCanTile;
+	public Point getTrashCanTile(int trashInd) {
+		return trashCanTiles.get(trashInd);
 	}
 	
-	public ArrayList<Point> getTrashTiles() {
-		return trashTiles;
+	public ArrayList<Point> getTrashTiles(int trashInd) {
+		return trashTiles.get(trashInd);
 	}
 }
