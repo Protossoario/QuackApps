@@ -155,7 +155,7 @@ public class QuackPanel extends GamePanel {
 			}
 		}
 		
-		for(int i=0; i<2; i++){
+		for(int i=0; i<map.getTrashCanTilesSize(); i++){
 			Point trashCan = map.getTrashCanTile(i);
 			for (int x = fromTileX; x <= toTileX; x++) {
 				for (int y = fromTileY; y <= toTileY; y++) {
@@ -245,7 +245,7 @@ public class QuackPanel extends GamePanel {
 		
 		/* Pintar al bote de basura */
 		
-		for(int i=0; i<2; i++){
+		for(int i=0; i<map.getTrashCanTilesSize(); i++){
 			Point trashCanTile = map.getTrashCanTile(i);
 			if (trashCanTile.x >= fromTileX && trashCanTile.x <= toTileX &&
 					trashCanTile.y >= fromTileY && trashCanTile.y <= toTileY) {
