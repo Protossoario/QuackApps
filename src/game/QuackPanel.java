@@ -122,7 +122,9 @@ public class QuackPanel extends GamePanel {
 				player.getPos().setY(newY);
 				if (!player.isOnGround()) {
 					player.setOnGround(true);
+					System.out.println(" acabo de aterrizar piso");
 				}
+				
 			}
 			// Si esta saltando (moviendose hacia arriba), alinearlo al borde inferior del tile
 			else if (velY < 0) {
@@ -171,6 +173,7 @@ public class QuackPanel extends GamePanel {
 	
 	protected void gameUpdate() {
 		player.update();
+		System.out.println(player.isOnGround() + "is on Ground");
 		checkCollisions();
 		checkTrash();
 	}
