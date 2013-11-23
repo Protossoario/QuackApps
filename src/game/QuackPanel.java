@@ -259,9 +259,7 @@ public class QuackPanel extends GamePanel {
 		
 		
 		/* Pintar al jugador */
-		dbg.drawImage(player.getCurrentImage(),
-					(int) (player.getPos().getX() + offsetX),
-					(int) (player.getPos().getY() + offsetY), this);
+		player.paint(dbg, offsetX, offsetY);
 		
 		/* Pintar los pedazos de basura */
 		ArrayList <Point> trashPieces = map.getTrashTiles(0);
