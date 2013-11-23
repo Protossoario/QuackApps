@@ -36,9 +36,9 @@ public class Player extends GameObject implements KeyListener {
 		private static final double MAX_FALL = 10; //Maxima velocidad para caida
 	private static final double GROUND_ACCEL = 0.45;
 	private static final double AIR_ACCEL = 0.75; //Modifica la velocidad horizontal durante el salto
-	private static final double MAX_SPEED = 10; //Modifica la velocidad maxima horizontal que puede alcanzar el pato
-	private static final double FRICTION = 0.45;
-	private static final double JUMP = 14.8;
+	private static final double MAX_SPEED = 8; //Modifica la velocidad maxima horizontal que puede alcanzar el pato
+	private static final double FRICTION = 0.65;
+	private static final double JUMP = 10;
 
 	private ArrayList <ArrayBlockingQueue <Duckling>> ducklingFrames;
 	private int ducklingWidth;
