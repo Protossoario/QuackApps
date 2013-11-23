@@ -188,17 +188,17 @@ public class QuackPanel extends GamePanel {
 	
 	private void renderHUD(Graphics g) {
 		g.drawImage(imageL.getImage("aluminioIcon.png"), 0, 0, this);
-		g.drawImage(imageL.getImage("organicaIcon.png"), 0, 0, this);
-		g.drawImage(imageL.getImage("papelIcon.png"), 0, 0, this);
-		g.drawImage(imageL.getImage("plasticoIcon.png"), 0, 0, this);
+		g.drawImage(imageL.getImage("organicaIcon.png"), 30, 0, this);
+		g.drawImage(imageL.getImage("papelIcon.png"), 60, 0, this);
+		g.drawImage(imageL.getImage("plasticoIcon.png"), 90, 0, this);
 		if (HUDFont != null) {
 			g.setFont(HUDFont);
 		}
 		g.setColor(Color.BLACK);
 		g.drawString("X " + collectedTrashAluminio, 35, 30);
-		g.drawString("X " + collectedTrashAluminio, 35, 30);
-		g.drawString("X " + collectedTrashAluminio, 35, 30);
-		g.drawString("X " + collectedTrashAluminio, 35, 30);
+		g.drawString("X " + collectedTrashOrganica, 65, 30);
+		g.drawString("X " + collectedTrashPapel, 95, 30);
+		g.drawString("X " + collectedTrashPlastico, 125, 30);
 	}
 
 	protected void gameRender() {
