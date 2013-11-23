@@ -2,6 +2,10 @@ aluminioIcon.png
 basuraAluminio.png
 boteAluminio.png
 fondo.png
+patito1.png
+patito2.png
+patito3.png
+patito4.png
 patoCaminaDer1.png
 patoCaminaDer2.png
 patoCaminaDer3.png

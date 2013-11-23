@@ -105,6 +105,10 @@ public class Animation {
 		return frameList.get(currentIndex).getSpriteName();
 	}
 	
+	public String getSprite(int index) {
+		return frameList.get(index).getSpriteName();
+	}
+	
 	public void startAnimation() {
 		elapsedTime = 0;
 		currentIndex = 0;
