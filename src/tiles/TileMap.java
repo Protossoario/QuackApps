@@ -172,7 +172,7 @@ public class TileMap {
 		tiles = new ArrayList <BufferedImage> ();
 		trashCanTiles = new ArrayList <Point> ();
 		trashTiles = new ArrayList <ArrayList <Point>> ();
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 4; i++) {
 			trashTiles.add(new ArrayList <Point>());
 		}
 		

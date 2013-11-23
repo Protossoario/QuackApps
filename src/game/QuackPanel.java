@@ -34,7 +34,10 @@ public class QuackPanel extends GamePanel {
 	private Graphics dbg;
 	private Font HUDFont;
 	
-	private int collectedTrash;
+	private int collectedTrashAluminio;
+	private int collectedTrashOrganica;
+	private int collectedTrashPapel;
+	private int collectedTrashPlastico;
 	
 	public QuackPanel() {
 		super();
@@ -62,7 +65,10 @@ public class QuackPanel extends GamePanel {
 		
 		addKeyListener(player);
 		
-		collectedTrash = 0;
+		collectedTrashAluminio= 0;
+		collectedTrashOrganica =0;
+		collectedTrashPapel = 0;
+		collectedTrashPlastico = 0;
 		
 		//midisL.play(MUSIC, true);
 	}
@@ -109,7 +115,7 @@ public class QuackPanel extends GamePanel {
 			playerBox.setBounds((int) player.getPos().getX(),
 								(int) (newY + player.getHeight()) + 1,
 								player.getWidth(),
-								player.getHeight());
+								1);
 			tile = map.checkTileCollision(playerBox);
 			if (tile == null && player.isOnGround()) {
 				player.setOnGround(false);
@@ -148,7 +154,20 @@ public class QuackPanel extends GamePanel {
 				for (int x = fromTileX; x <= toTileX; x++) {
 					for (int y = fromTileY; y <= toTileY; y++) {
 						if (trash.x == x && trash.y == y) {
-							collectedTrash++;
+							switch (i) {
+							case 0:
+								collectedTrashAluminio++;
+								break;
+							case 1:
+								collectedTrashOrganica++;
+								break;
+							case 2:
+								collectedTrashPapel++;
+								break;
+							case 3:
+								collectedTrashPlastico++;
+								break;
+							}
 							iter.remove();
 							clipsL.play(PICKUP, false);
 						}
@@ -161,8 +180,8 @@ public class QuackPanel extends GamePanel {
 			Point trashCan = map.getTrashCanTile(i);
 			for (int x = fromTileX; x <= toTileX; x++) {
 				for (int y = fromTileY; y <= toTileY; y++) {
-					if (trashCan.x == x && trashCan.y == y && collectedTrash > 0) {
-						collectedTrash = 0;
+					if (trashCan.x == x && trashCan.y == y && collectedTrashAluminio > 0) {
+						collectedTrashAluminio = 0;
 						clipsL.play(COINS, false);
 					}
 				}
@@ -179,11 +198,17 @@ public class QuackPanel extends GamePanel {
 	
 	private void renderHUD(Graphics g) {
 		g.drawImage(imageL.getImage("aluminioIcon.png"), 0, 0, this);
+		g.drawImage(imageL.getImage("organicaIcon.png"), 80, 0, this);
+		g.drawImage(imageL.getImage("papelIcon.png"), 155, 0, this);
+		g.drawImage(imageL.getImage("plasticoIcon.png"), 235, 0, this);
 		if (HUDFont != null) {
 			g.setFont(HUDFont);
 		}
 		g.setColor(Color.BLACK);
-		g.drawString("X " + collectedTrash, 35, 30);
+		g.drawString("X " + collectedTrashAluminio, 35, 30);
+		g.drawString("X " + collectedTrashOrganica, 110, 30);
+		g.drawString("X " + collectedTrashPapel, 185, 30);
+		g.drawString("X " + collectedTrashPlastico, 265, 30);
 	}
 
 	protected void gameRender() {
@@ -253,9 +278,26 @@ public class QuackPanel extends GamePanel {
 					trashCanTile.y >= fromTileY && trashCanTile.y <= toTileY) {
 				int drawX = TileMap.tilesToPixels(trashCanTile.x) + offsetX;
 				int drawY = TileMap.tilesToPixels(trashCanTile.y) + offsetY;
-				dbg.drawImage(imageL.getImage("boteAluminio.png"),
-								drawX,
-								drawY, this);
+				if(i == 0){
+					dbg.drawImage(imageL.getImage("boteAluminio.png"),
+									drawX,
+									drawY, this);
+				}
+				else if(i == 1){
+					dbg.drawImage(imageL.getImage("boteOrganica.png"),
+									drawX,
+									drawY, this);
+				}
+				else if(i == 2){
+					dbg.drawImage(imageL.getImage("botePapel.png"),
+										drawX,
+										drawY, this);
+				}
+				else if(i == 3){
+					dbg.drawImage(imageL.getImage("botePlastico.png"),
+										drawX,
+										drawY, this);
+				}
 			}
 		}
 		

@@ -2,6 +2,8 @@ aluminioIcon.png
 basuraAluminio.png
 boteAluminio.png
 fondo.png
+organicaIcon.png
+papelIcon.png
 patito1_left.png
 patito1_right.png
 patito2_left.png
@@ -46,6 +48,7 @@ patoSaltoDer1.png
 patoSaltoDer2.png
 patoSaltoIzq1.png
 patoSaltoIzq2.png
+plasticoIcon.png
 tile_0.png
 tile_1.png
 tile_2.png
