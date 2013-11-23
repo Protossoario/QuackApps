@@ -94,9 +94,11 @@ public class TileMap {
 			
 			String line;
 			while ((line = reader.readLine()) != null) {
-				lines.add(line);
-				if (line.length() > max_length) {
-					max_length = line.length();
+				if (!line.startsWith("#")) {
+					lines.add(line);
+					if (line.length() > max_length) {
+						max_length = line.length();
+					}
 				}
 			}
 			reader.close();
