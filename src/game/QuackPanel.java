@@ -140,22 +140,24 @@ public class QuackPanel extends GamePanel {
 		int toTileX = TileMap.pixelsToTiles(player.getPos().getX() + player.getWidth());
 		int toTileY = TileMap.pixelsToTiles(player.getPos().getY() + player.getHeight());
 		
-		ArrayList <Point> trashPieces = map.getTrashTiles(0);
-		Iterator <Point> iter = trashPieces.listIterator();
-		while (iter.hasNext()) {
-			Point trash = iter.next();
-			for (int x = fromTileX; x <= toTileX; x++) {
-				for (int y = fromTileY; y <= toTileY; y++) {
-					if (trash.x == x && trash.y == y) {
-						collectedTrash++;
-						iter.remove();
-						clipsL.play(PICKUP, false);
+		for (int i = 0; i < map.getTrashTilesSize(); i++) {
+			ArrayList <Point> trashPieces = map.getTrashTiles(i);
+			Iterator <Point> iter = trashPieces.listIterator();
+			while (iter.hasNext()) {
+				Point trash = iter.next();
+				for (int x = fromTileX; x <= toTileX; x++) {
+					for (int y = fromTileY; y <= toTileY; y++) {
+						if (trash.x == x && trash.y == y) {
+							collectedTrash++;
+							iter.remove();
+							clipsL.play(PICKUP, false);
+						}
 					}
 				}
 			}
 		}
 		
-		for(int i=0; i<map.getTrashCanTilesSize(); i++){
+		for (int i = 0; i < map.getTrashCanTilesSize(); i++){
 			Point trashCan = map.getTrashCanTile(i);
 			for (int x = fromTileX; x <= toTileX; x++) {
 				for (int y = fromTileY; y <= toTileY; y++) {
@@ -245,7 +247,7 @@ public class QuackPanel extends GamePanel {
 		
 		/* Pintar al bote de basura */
 		
-		for(int i=0; i<map.getTrashCanTilesSize(); i++){
+		for (int i = 0; i < map.getTrashCanTilesSize(); i++){
 			Point trashCanTile = map.getTrashCanTile(i);
 			if (trashCanTile.x >= fromTileX && trashCanTile.x <= toTileX &&
 					trashCanTile.y >= fromTileY && trashCanTile.y <= toTileY) {
@@ -262,15 +264,17 @@ public class QuackPanel extends GamePanel {
 		player.paint(dbg, offsetX, offsetY);
 		
 		/* Pintar los pedazos de basura */
-		ArrayList <Point> trashPieces = map.getTrashTiles(0);
-		for (Point trash : trashPieces) {
-			if (trash.x >= fromTileX && trash.x <= toTileX &&
-				trash.y >= fromTileY && trash.y <= toTileY) {
-				int drawX = TileMap.tilesToPixels(trash.x) + offsetX;
-				int drawY = TileMap.tilesToPixels(trash.y) + offsetY;
-				dbg.drawImage(imageL.getImage("basuraAluminio.png"),
-								drawX,
-								drawY, this);
+		for (int i = 0; i < map.getTrashTilesSize(); i++) {
+			ArrayList <Point> trashPieces = map.getTrashTiles(i);
+			for (Point trash : trashPieces) {
+				if (trash.x >= fromTileX && trash.x <= toTileX &&
+					trash.y >= fromTileY && trash.y <= toTileY) {
+					int drawX = TileMap.tilesToPixels(trash.x) + offsetX;
+					int drawY = TileMap.tilesToPixels(trash.y) + offsetY;
+					dbg.drawImage(imageL.getImage("basuraAluminio.png"),
+									drawX,
+									drawY, this);
+				}
 			}
 		}
 		
