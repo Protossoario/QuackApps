@@ -64,7 +64,7 @@ public class QuackPanel extends GamePanel {
 		
 		collectedTrash = 0;
 		
-		midisL.play(MUSIC, true);
+		//midisL.play(MUSIC, true);
 	}
 	
 	private void checkCollisions() {
@@ -155,15 +155,18 @@ public class QuackPanel extends GamePanel {
 			}
 		}
 		
-		Point trashCan = map.getTrashCanTile(0);
-		for (int x = fromTileX; x <= toTileX; x++) {
-			for (int y = fromTileY; y <= toTileY; y++) {
-				if (trashCan.x == x && trashCan.y == y && collectedTrash > 0) {
-					collectedTrash = 0;
-					clipsL.play(COINS, false);
+		for(int i=0; i<2; i++){
+			Point trashCan = map.getTrashCanTile(i);
+			for (int x = fromTileX; x <= toTileX; x++) {
+				for (int y = fromTileY; y <= toTileY; y++) {
+					if (trashCan.x == x && trashCan.y == y && collectedTrash > 0) {
+						collectedTrash = 0;
+						clipsL.play(COINS, false);
+					}
 				}
 			}
 		}
+		
 	}
 	
 	protected void gameUpdate() {
@@ -241,15 +244,19 @@ public class QuackPanel extends GamePanel {
 		}
 		
 		/* Pintar al bote de basura */
-		Point trashCanTile = map.getTrashCanTile(0);
-		if (trashCanTile.x >= fromTileX && trashCanTile.x <= toTileX &&
-				trashCanTile.y >= fromTileY && trashCanTile.y <= toTileY) {
-			int drawX = TileMap.tilesToPixels(trashCanTile.x) + offsetX;
-			int drawY = TileMap.tilesToPixels(trashCanTile.y) + offsetY;
-			dbg.drawImage(imageL.getImage("boteAluminio.png"),
-							drawX,
-							drawY, this);
+		
+		for(int i=0; i<2; i++){
+			Point trashCanTile = map.getTrashCanTile(i);
+			if (trashCanTile.x >= fromTileX && trashCanTile.x <= toTileX &&
+					trashCanTile.y >= fromTileY && trashCanTile.y <= toTileY) {
+				int drawX = TileMap.tilesToPixels(trashCanTile.x) + offsetX;
+				int drawY = TileMap.tilesToPixels(trashCanTile.y) + offsetY;
+				dbg.drawImage(imageL.getImage("boteAluminio.png"),
+								drawX,
+								drawY, this);
+			}
 		}
+		
 		
 		/* Pintar al jugador */
 		dbg.drawImage(player.getCurrentImage(),
