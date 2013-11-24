@@ -60,3 +60,7 @@ tile_2.png
 tile_3.png
 tile_4.png
 tile_5.png
+<<<<<<< HEAD
+=======
+tile_6.png
+>>>>>>> QuackApps/master
