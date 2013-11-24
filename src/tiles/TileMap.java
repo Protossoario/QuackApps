@@ -212,4 +212,8 @@ public class TileMap {
 	public ArrayList<Point> getTrashTiles(int trashInd) {
 		return trashTiles.get(trashInd);
 	}
+	
+	public int getTrashTilesSize() {
+		return trashTiles.size();
+	}
 }
