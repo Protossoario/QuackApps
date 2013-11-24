@@ -25,6 +25,7 @@ public class Player extends GameObject implements KeyListener {
 	private boolean leftPressed;
 	private boolean rightPressed;
 	private boolean upPressed;
+	private boolean jumpHold;
 	private boolean onGround;
 	private boolean facingRight;
 	private boolean doubleJump;
@@ -251,6 +252,7 @@ public class Player extends GameObject implements KeyListener {
 			if (upPressed && !jumping) {
 				vel.setY(-JUMP);
 				jumping = true;
+				jumpHold = true;
 			}
 		}
 		else {
@@ -264,9 +266,10 @@ public class Player extends GameObject implements KeyListener {
 				accel.setX(0);
 			}
 			
-			/*if (doubleJump && upPressed && !jumping && !doubleJumping) {
+			if (doubleJump && upPressed && !jumpHold && !doubleJumping) {
 				vel.setY(-JUMP);
-			}*/
+				doubleJumping = true;
+			}
 			
 			vel.setY(vel.getY() + accel.getY());
 		}
@@ -314,6 +317,7 @@ public class Player extends GameObject implements KeyListener {
 	public void setOnGround(boolean onGround) {
 		this.onGround = onGround;
 		if (onGround && !upPressed) jumping = false;
+		if (doubleJumping) doubleJumping = false;
 	}
 	
 	public BufferedImage getCurrentImage() {
@@ -352,6 +356,7 @@ public class Player extends GameObject implements KeyListener {
 		else if (code == KeyEvent.VK_UP) {
 			upPressed = false;
 			if (onGround) jumping = false;
+			if (jumpHold) jumpHold = false;
 		}
 	}
 	
