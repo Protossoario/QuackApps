@@ -24,7 +24,6 @@ public class TileMap {
 	private static final int ENEMY_TILE = '=';
 	private static final int PLAYER_TILE = '*';
 	
-	
 	// Guarda las imagenes de los tiles
 	private ArrayList <BufferedImage> tiles;
 	
@@ -39,6 +38,7 @@ public class TileMap {
 	private ArrayList <ArrayList <Point>> trashTiles;
 	private int trashTilesTotal;
 	private int[] trashTilesTypeTotal;
+	private int backgroundTile;
 	
 	// Matriz bidimensional que guarda el numero de tile que corresponde al subindice (i, j)
 	// Para cada subindice, se guarda un numero (0, 1, 2, etc.) que indica el numero de tile que es
@@ -69,6 +69,16 @@ public class TileMap {
 		
 		loadMap("maps/" + file);
 		getTiles(gp.getImageLoader());
+		
+		System.out.println("Background tile: " + backgroundTile);
+		
+		for (int y = map[0].length / 2; y < map[0].length; y++) {
+			for (int x = 0; x < map.length; x++) {
+				if (map[x][y] == EMPTY_TILE) {
+					map[x][y] = backgroundTile;
+				}
+			}
+		}
 	}
 	
 	
@@ -95,7 +105,7 @@ public class TileMap {
 			for (int y = fromTileY; y <= toTileY; y++) {
 				if (x < 0 || x >= map.length ||
 					y < 0 || y >= map[0].length ||
-					map[x][y] != EMPTY_TILE) {
+					(map[x][y] > EMPTY_TILE && map[x][y] < backgroundTile)) {
 					return new Point(x, y);
 				}
 			}
@@ -118,7 +128,7 @@ public class TileMap {
 		for (int x = fromTileX; x <= toTileX; x++) {
 			for (int y = fromTileY; y <= toTileY; y++) {
 				if (x < 0 || x >= map.length ||
-					map[x][y] == EMPTY_TILE) {
+					map[x][y] == EMPTY_TILE || map[x][y] == backgroundTile) {
 					return true;
 				}
 			}
@@ -138,8 +148,6 @@ public class TileMap {
 	private boolean isTrashTile(char tile) {
 		return tile >= FIRST_TRASH && tile <= LAST_TRASH;
 	}
-	
-	
 	
 	/**
 	 * Metodo para leer el archivo de texto y cargar los datos a la matriz de enteros
@@ -225,11 +233,13 @@ public class TileMap {
 		String imgName = "tile_";
 		String imgExt = ".png";
 		int i = 0;
+		backgroundTile = -1;
 		boolean end = false;
 		while (!end) {
 			BufferedImage img = imageL.getImage(imgName + i + imgExt);
 			if (img != null) {
 				tiles.add(img);
+				backgroundTile++;
 			}
 			else {
 				System.out.println("Tile #" + i + " es null.");

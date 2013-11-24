@@ -60,3 +60,4 @@ tile_2.png
 tile_3.png
 tile_4.png
 tile_5.png
+tile_6.png

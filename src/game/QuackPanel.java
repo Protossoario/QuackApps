@@ -86,7 +86,7 @@ public class QuackPanel extends GamePanel {
 		trashCollected = new int[4];
 		trashTypeCollectedTotal = new int[4];
 		
-		//midisL.play(MUSIC, true);
+		midisL.play(MUSIC, true);
 	}
 	
 	private void checkCollisions() {
