@@ -28,7 +28,7 @@ public class QuackPanel extends GamePanel {
 	private static final String PICKUP = "pickup";
 	private static final String COINS = "coins";
 	
-	private static final float HUD_FONT_SIZE = 20f;
+	private static final float HUD_FONT_SIZE = 16f;
 	
 	private ArrayList <Enemy> enemies;
 	private Player player;
@@ -36,8 +36,11 @@ public class QuackPanel extends GamePanel {
 	private Graphics dbg;
 	private Font HUDFont;
 	
+	private int trashCollectedTotal;
 	private int[] trashCollected;
 	private static final String[] trashNames = {"basuraAluminio.png", "basuraOrganica.png", "basuraPapel.png", "basuraPlastico.png"};
+	private int[] trashTypeCollectedTotal;
+	
 	
 	private boolean gameOver;
 	
@@ -64,6 +67,7 @@ public class QuackPanel extends GamePanel {
 		
 		gameOver = false;
 		
+		
 		// Crear las fonts
 		try {
 			HUDFont = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getClassLoader().getResourceAsStream(FONTS_DIR + HUD_FONT));
@@ -78,7 +82,9 @@ public class QuackPanel extends GamePanel {
 		
 		addKeyListener(player);
 		
+		trashCollectedTotal = 0;
 		trashCollected = new int[4];
+		trashTypeCollectedTotal = new int[4];
 		
 		//midisL.play(MUSIC, true);
 	}
@@ -179,6 +185,8 @@ public class QuackPanel extends GamePanel {
 			for (int x = fromTileX; x <= toTileX; x++) {
 				for (int y = fromTileY; y <= toTileY; y++) {
 					if (trashCan.x == x && trashCan.y == y && trashCollected[i] > 0) {
+						trashCollectedTotal += trashCollected[i];
+						trashTypeCollectedTotal[i] += trashCollected[i];
 						trashCollected[i] = 0;
 						clipsL.play(COINS, false);
 					}
@@ -262,16 +270,20 @@ public class QuackPanel extends GamePanel {
 		g.drawImage(imageL.getImage("aluminioIcon.png"), 0, 0, this);
 		g.drawImage(imageL.getImage("organicaIcon.png"), 80, 0, this);
 		g.drawImage(imageL.getImage("papelIcon.png"), 155, 0, this);
-		g.drawImage(imageL.getImage("plasticoIcon.png"), 235, 0, this);
+		g.drawImage(imageL.getImage("plasticoIcon.png"), 224, 0, this);
 		if (HUDFont != null) {
 			g.setFont(HUDFont);
 		}
 		g.setColor(Color.BLACK);
-		g.drawString("X " + trashCollected[0], 35, 30);
-		g.drawString("X " + trashCollected[1], 110, 30);
-		g.drawString("X " + trashCollected[2], 185, 30);
-		g.drawString("X " + trashCollected[3], 265, 30);
-
+		g.drawString("X " + trashCollected[0], 35, 20);
+		g.drawString("X " + trashCollected[1], 110, 20);
+		g.drawString("X " + trashCollected[2], 185, 20);
+		g.drawString("X " + trashCollected[3], 252, 20);
+		g.drawString( trashCollectedTotal + "/" + map.getTrashTilesTotal() , 740, 30);
+		g.drawString(trashTypeCollectedTotal[0] + "/" + map.getTrashTileTypeTotal(0), 35, 38);
+		g.drawString(trashTypeCollectedTotal[1] + "/" + map.getTrashTileTypeTotal(1), 110, 38);
+		g.drawString(trashTypeCollectedTotal[2] + "/" + map.getTrashTileTypeTotal(2), 185, 38);
+		g.drawString(trashTypeCollectedTotal[3] + "/" + map.getTrashTileTypeTotal(3), 252, 38);
 	}
 
 	protected void gameRender() {
