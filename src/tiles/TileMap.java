@@ -28,6 +28,8 @@ public class TileMap {
 	private Point playerSpawn;
 	// Guarda las posiciones de cada tipo de bote de basura
 	private ArrayList <Point> trashCanTiles;
+	
+	private ArrayList <Point> spikeTiles;
 	// Arreglo de Points de dos dimensiones
 	// Guarda las posiciones de todos los pedazos de basura, para cada tipo de basura
 	private ArrayList <ArrayList <Point>> trashTiles;
@@ -36,6 +38,25 @@ public class TileMap {
 	// Para cada subindice, se guarda un numero (0, 1, 2, etc.) que indica el numero de tile que es
 	// De lo contrario, se marca con un -1 los espacios vacios
 	private int map[][];
+	
+	/**
+	 * Constructor que manda a cargar los datos del tilemap
+	 * @param file Es el nombre del archivo de texto de donde se leera la informacion del tilemap
+	 */
+	public TileMap(String file, GamePanel gp) {
+		tiles = new ArrayList <BufferedImage> ();
+		trashCanTiles = new ArrayList <Point> ();
+		trashTiles = new ArrayList <ArrayList <Point>> ();
+		spikeTiles = new ArrayList <Point>();
+		
+		for (int i = 0; i < 4; i++) {
+			trashTiles.add(new ArrayList <Point>());
+		}
+		
+		loadMap("maps/" + file);
+		getTiles(gp.getImageLoader());
+	}
+	
 	
 	public static int pixelsToTiles(double pixels) {
 		return (int) pixels / TILE_SIZE;
@@ -81,6 +102,8 @@ public class TileMap {
 		return tile >= FIRST_TRASH && tile <= LAST_TRASH;
 	}
 	
+	
+	
 	/**
 	 * Metodo para leer el archivo de texto y cargar los datos a la matriz de enteros
 	 * @param fname Indica el nombre del archivo a leer, con su directorio
@@ -120,6 +143,9 @@ public class TileMap {
 			for (int x = 0; x < line.length(); x++) {
 				if (isSolidTile(line.charAt(x))) {
 					map[x][y] = line.charAt(x) - 'A';
+					if(line.charAt(x) == 'F'){
+						spikeTiles.add(new Point(x, y));
+					}
 				}
 				else if (isTrashCanTile(line.charAt(x))) {
 					trashCanTiles.add(line.charAt(x) - 'a', new Point(x, y));
@@ -164,22 +190,6 @@ public class TileMap {
 		}
 	}
 	
-	/**
-	 * Constructor que manda a cargar los datos del tilemap
-	 * @param file Es el nombre del archivo de texto de donde se leera la informacion del tilemap
-	 */
-	public TileMap(String file, GamePanel gp) {
-		tiles = new ArrayList <BufferedImage> ();
-		trashCanTiles = new ArrayList <Point> ();
-		trashTiles = new ArrayList <ArrayList <Point>> ();
-		for (int i = 0; i < 4; i++) {
-			trashTiles.add(new ArrayList <Point>());
-		}
-		
-		loadMap("maps/" + file);
-		getTiles(gp.getImageLoader());
-	}
-	
 	public int getWidth() {
 		return map.length;
 	}
@@ -215,5 +225,14 @@ public class TileMap {
 	
 	public int getTrashTilesSize() {
 		return trashTiles.size();
+	}
+	
+	
+	public Point getSpikeTile(int spikeInd) {
+		return spikeTiles.get(spikeInd);
+	}
+	
+	public int getSpikeTilesSize() {
+		return spikeTiles.size();
 	}
 }

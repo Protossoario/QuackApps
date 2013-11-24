@@ -20,6 +20,7 @@ import tiles.TileMap;
 @SuppressWarnings("serial")
 public class QuackPanel extends GamePanel {
 	private static final String BACKGROUND = "fondo.jpg";
+	private static final String GAME_OVER = "gameOver.png";
 	private static final String FONTS_DIR = "fonts/";
 	private static final String HUD_FONT = "FromWhereYouAre.ttf";
 	
@@ -37,6 +38,8 @@ public class QuackPanel extends GamePanel {
 	private int[] trashCollected;
 	private static final String[] trashNames = {"basuraAluminio.png", "basuraOrganica.png", "basuraPapel.png", "basuraPlastico.png"};
 	
+	private boolean gameOver;
+	
 	public QuackPanel() {
 		super();
 		
@@ -48,6 +51,8 @@ public class QuackPanel extends GamePanel {
 		map = new TileMap("level1.txt", this);
 		Point playerSpawn = map.getPlayerSpawn();
 		player.setPos(TileMap.tilesToPixels(playerSpawn.x), TileMap.tilesToPixels(playerSpawn.y));
+		
+		gameOver = false;
 		
 		// Crear las fonts
 		try {
@@ -171,14 +176,34 @@ public class QuackPanel extends GamePanel {
 					}
 				}
 			}
-		}
+		}	
+	}
+	
+	private void checkSpikes(){
+		int fromTileX = TileMap.pixelsToTiles(player.getPos().getX());
+		int fromTileY = TileMap.pixelsToTiles(player.getPos().getY());
+		int toTileX = TileMap.pixelsToTiles(player.getPos().getX() + player.getWidth());
+		int toTileY = TileMap.pixelsToTiles(player.getPos().getY() + player.getHeight());
 		
+		for (int i = 0; i < map.getSpikeTilesSize(); i++){
+			Point spikeTile = map.getSpikeTile(i);
+			for (int x = fromTileX; x <= toTileX; x++) {
+				for (int y = fromTileY; y <= toTileY; y++) {
+					if (spikeTile.x == x && spikeTile.y == y) {
+						gameOver = true;
+					}
+				}
+			}
+		}
 	}
 	
 	protected void gameUpdate() {
-		player.update();
-		checkCollisions();
-		checkTrash();
+		if(!gameOver){
+			player.update();
+			checkCollisions();
+			checkTrash();
+			checkSpikes();
+		}
 	}
 	
 	private void renderHUD(Graphics g) {
@@ -208,7 +233,7 @@ public class QuackPanel extends GamePanel {
 				dbg = dbImage.getGraphics();
 			}
 		}
-
+		
 		/* Calculamos el offset en X */
 		int offsetX = (int) (PWIDTH / 2 - (player.getPos().getX() + player.getWidth() / 2));
 		int max_offsetX = PWIDTH - TileMap.tilesToPixels(map.getWidth());
@@ -307,5 +332,8 @@ public class QuackPanel extends GamePanel {
 		}
 		
 		renderHUD(dbg);
+		if(gameOver){
+			dbg.drawImage(imageL.getImage(GAME_OVER), 0, 0, this);
+		}
 	}
 }
