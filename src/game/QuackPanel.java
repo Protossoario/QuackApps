@@ -27,7 +27,7 @@ public class QuackPanel extends GamePanel {
 	private static final String MUSIC = "overworld";
 	private static final String PICKUP = "pickup";
 	private static final String COINS = "coins";
-	
+		
 	private static final float HUD_FONT_SIZE = 16f;
 	
 	private ArrayList <Enemy> enemies;
@@ -41,11 +41,19 @@ public class QuackPanel extends GamePanel {
 	private static final String[] trashNames = {"basuraAluminio.png", "basuraOrganica.png", "basuraPapel.png", "basuraPlastico.png"};
 	private int[] trashTypeCollectedTotal;
 	
-	
 	private boolean gameOver;
+	
+	private int levelCounter = 1;
+	
 	
 	public QuackPanel() {
 		super();
+
+		initialize("level" + levelCounter + ".txt");
+
+	}
+	
+	public void initialize(String file){
 		
 		imageL = new ImageLoader("images.txt");
 		clipsL = new ClipsLoader("clips.txt");
@@ -53,7 +61,7 @@ public class QuackPanel extends GamePanel {
 		
 		player = new Player(this);
 		enemies = new ArrayList <Enemy> ();
-		map = new TileMap("level1.txt", this);
+		map = new TileMap(file, this);
 		Point playerSpawn = map.getPlayerSpawn();
 		player.setPos(TileMap.tilesToPixels(playerSpawn.x), TileMap.tilesToPixels(playerSpawn.y));
 		ArrayList <Point> enemySpawns = map.getEnemySpawns();
@@ -195,7 +203,13 @@ public class QuackPanel extends GamePanel {
 					}
 				}
 			}
-		}	
+		}
+		
+		if(trashCollectedTotal >= map.getTrashTilesTotal()){
+			midisL.stop();
+			levelCounter++;
+			initialize("level" + levelCounter + ".txt");
+		}
 	}
 	
 	private void checkSpikes(){
@@ -218,7 +232,7 @@ public class QuackPanel extends GamePanel {
 	
 	
 	protected void gameUpdate() {
-		if (!gameOver) {
+		if (!gameOver && !player.getIsPaused()) {
 			player.update();
 			for (Enemy e : enemies) {
 				e.update();
