@@ -312,11 +312,6 @@ public class Player extends GameObject implements KeyListener {
 	public BufferedImage getCurrentImage() {
 		return imageL.getImage(currentAnimation.getCurrentSprite());
 	}
-	
-	public void setPos(double X, double Y) {
-		pos.setX(X);
-		pos.setY(Y);
-	}
 
 	public void keyTyped(KeyEvent e) {
 	}

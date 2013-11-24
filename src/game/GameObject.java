@@ -118,6 +118,11 @@ public abstract class GameObject {
 	public void setPos(Vector pos) {
 		this.pos = pos;
 	}
+	
+	public void setPos(double X, double Y) {
+		pos.setX(X);
+		pos.setY(Y);
+	}
 
 	public Vector getVel() {
 		return vel;
