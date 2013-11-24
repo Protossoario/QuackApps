@@ -1,2 +1,4 @@
 coins coins.wav
 pickup pickup.wav
+duck1 duck1.wav
+duck2 duck2.wav
