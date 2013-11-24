@@ -122,7 +122,7 @@ public class TileMap {
 					map[x][y] = line.charAt(x) - 'A';
 				}
 				else if (isTrashCanTile(line.charAt(x))) {
-					trashCanTiles.add(new Point(x, y));
+					trashCanTiles.add(line.charAt(x) - 'a', new Point(x, y));
 				}
 				else if (isTrashTile(line.charAt(x))) {
 					int trashInd = line.charAt(x) - FIRST_TRASH;
