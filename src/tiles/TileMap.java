@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class TileMap {
-	private static final int TILE_SIZE = 128;
+	private static final int TILE_SIZE = 64;
 	private static final int EMPTY_TILE = -1;
 	private static final int FIRST_TILE = 'A';
 	private static final int LAST_TILE = 'Z';
