@@ -19,7 +19,8 @@ public class Player extends GameObject implements KeyListener {
 	private Animation walkRight;
 	private Animation jumpLeft;
 	private Animation jumpRight;
-	private Animation duckling;
+	private Animation ducklingLeft;
+	private Animation ducklingRight;
 	
 	private boolean leftPressed;
 	private boolean rightPressed;
@@ -27,14 +28,12 @@ public class Player extends GameObject implements KeyListener {
 	private boolean onGround;
 	private boolean facingRight;
 	
-
-	private static final double GRAVITY = 0.6;
-
 	private int lives;
 	
-
-		private static final double MAX_FALL = 10; //Maxima velocidad para caida
+	private static final double GRAVITY = 0.6;
+	private static final double MAX_FALL = 10; // Maxima velocidad para caida
 	private static final double GROUND_ACCEL = 0.45;
+<<<<<<< HEAD
 	private static final double AIR_ACCEL = 0.75; //Modifica la velocidad horizontal durante el salto
 	private static final double MAX_SPEED = 8; //Modifica la velocidad maxima horizontal que puede alcanzar el pato
 	private static final double FRICTION = 0.65;
@@ -43,6 +42,16 @@ public class Player extends GameObject implements KeyListener {
 	private ArrayList <ArrayBlockingQueue <Duckling>> ducklingFrames;
 	private int ducklingWidth;
 	private int ducklingHeight;
+=======
+	private static final double AIR_ACCEL = 0.75; // Modifica la velocidad horizontal durante el salto
+	private static final double MAX_SPEED = 10; // Modifica la velocidad maxima horizontal que puede alcanzar el pato
+	private static final double FRICTION = 0.45;
+	private static final double JUMP = 14.8;
+
+	private ArrayList <ArrayBlockingQueue <Duckling>> ducklingFrames;
+	private double offsetDucklingX;
+	private double offsetDucklingY;
+>>>>>>> QuackApps/master
 	
 	private static final int FRAME = 5; // Duracion de un frame de la animacion del pato
 	private static final int SECOND = 60; // Duracion de un segundo en frames de animacion
@@ -122,27 +131,38 @@ public class Player extends GameObject implements KeyListener {
 		currentAnimation = walkRight;
 		
 		// Crear la animacion para los patitos
-		duckling = new Animation();
-		duckling.addFrame("patito1.png", FRAME);
-		duckling.addFrame("patito2.png", FRAME);
-		duckling.addFrame("patito3.png", FRAME);
-		duckling.addFrame("patito4.png", FRAME);
-		duckling.setLooping(true);
+		ducklingLeft = new Animation();
+		ducklingLeft.addFrame("patito1_left.png", FRAME);
+		ducklingLeft.addFrame("patito2_left.png", FRAME);
+		ducklingLeft.addFrame("patito3_left.png", FRAME);
+		ducklingLeft.addFrame("patito4_left.png", FRAME);
+		ducklingLeft.setLooping(true);
 		
-		BufferedImage img = imageL.getImage(duckling.getCurrentSprite());
-		ducklingWidth = img.getWidth();
-		ducklingHeight = img.getHeight();
+		ducklingRight = new Animation();
+		ducklingRight.addFrame("patito1_right.png", FRAME);
+		ducklingRight.addFrame("patito2_right.png", FRAME);
+		ducklingRight.addFrame("patito3_right.png", FRAME);
+		ducklingRight.addFrame("patito4_right.png", FRAME);
+		ducklingRight.setLooping(true);
+		
+		// Inicializamos el tamano de los patitos
+		BufferedImage img = imageL.getImage(ducklingLeft.getCurrentSprite());
+		int ducklingWidth = img.getWidth();
+		int ducklingHeight = img.getHeight();
+		
+		// Inicializamos el tamano
+		img = imageL.getImage(currentAnimation.getCurrentSprite());
+		width = img.getWidth();
+		height = img.getHeight();
+		
+		offsetDucklingX = (width - ducklingWidth) / 2;
+		offsetDucklingY = height - ducklingHeight;
 		
 		onGround = false;
 		facingRight = true;
 		
 		// Fijamos la aceleracion de la gravedad de forma permanente
 		accel.setY(GRAVITY);
-		
-		// Inicializamos el tamano
-		img = imageL.getImage(currentAnimation.getCurrentSprite());
-		width = img.getWidth();
-		height = img.getHeight();
 		
 		// Inicializamos las vidas
 		lives = START_LIVES;
@@ -198,11 +218,9 @@ public class Player extends GameObject implements KeyListener {
 	}
 	
 	private void updateDucklings() {
-		double offsetX = (width - ducklingWidth) / 2;
-		double offsetY = height - ducklingHeight;
-		Vector smallPos = new Vector(pos.getX() + offsetX,
-										pos.getY() + offsetY);
-		Duckling ducklingFrame = new Duckling(smallPos, duckling.getCurrentIndex());
+		Vector smallPos = new Vector(pos.getX() + offsetDucklingX,
+										pos.getY() + offsetDucklingY);
+		Duckling ducklingFrame = new Duckling(smallPos, ducklingLeft.getCurrentIndex());
 		for (ArrayBlockingQueue <Duckling> queue : ducklingFrames) {
 			queue.offer(ducklingFrame);
 			ducklingFrame = queue.poll();
@@ -211,7 +229,7 @@ public class Player extends GameObject implements KeyListener {
 	
 	public void update() {
 		currentAnimation.updateAnimation();
-		duckling.updateAnimation();
+		ducklingLeft.updateAnimation();
 		
 		if (onGround) {
 			if (leftPressed && !rightPressed) {
@@ -273,7 +291,13 @@ public class Player extends GameObject implements KeyListener {
 		for (int i = 0; i < lives; i++) {
 			ArrayBlockingQueue <Duckling> queue = ducklingFrames.get(i);
 			Duckling ducklingFrame = queue.peek();
-			String ducklingImg = duckling.getSprite(ducklingFrame.animationFrame);
+			String ducklingImg;
+			if (ducklingFrame.pos.getX() - pos.getX() > offsetDucklingX) {
+				ducklingImg = ducklingLeft.getSprite(ducklingFrame.animationFrame);
+			}
+			else {
+				ducklingImg = ducklingRight.getSprite(ducklingFrame.animationFrame);
+			}
 			g.drawImage(imageL.getImage(ducklingImg),
 						((int) ducklingFrame.pos.getX()) + offsetX,
 						((int) ducklingFrame.pos.getY()) + offsetY, null);
