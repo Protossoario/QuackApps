@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class TileMap {
-	private static final int TILE_SIZE = 64;
+	private static final int TILE_SIZE = 128;
 	private static final int EMPTY_TILE = -1;
 	private static final int FIRST_TILE = 'A';
 	private static final int LAST_TILE = 'Z';
@@ -58,8 +58,8 @@ public class TileMap {
 		
 		for (int x = fromTileX; x <= toTileX; x++) {
 			for (int y = fromTileY; y <= toTileY; y++) {
-				if ((x < 0 || x >= map.length) ||
-					(y < 0 || y >= map[0].length) ||
+				if (x < 0 || x >= map.length ||
+					y < 0 || y >= map[0].length ||
 					map[x][y] != EMPTY_TILE) {
 					return new Point(x, y);
 				}
@@ -172,7 +172,7 @@ public class TileMap {
 		tiles = new ArrayList <BufferedImage> ();
 		trashCanTiles = new ArrayList <Point> ();
 		trashTiles = new ArrayList <ArrayList <Point>> ();
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 4; i++) {
 			trashTiles.add(new ArrayList <Point>());
 		}
 		

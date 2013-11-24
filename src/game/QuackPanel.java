@@ -19,7 +19,7 @@ import tiles.TileMap;
 
 @SuppressWarnings("serial")
 public class QuackPanel extends GamePanel {
-	private static final String BACKGROUND = "fondo.png";
+	private static final String BACKGROUND = "fondo.jpg";
 	private static final String FONTS_DIR = "fonts/";
 	private static final String HUD_FONT = "FromWhereYouAre.ttf";
 	
@@ -70,8 +70,6 @@ public class QuackPanel extends GamePanel {
 		collectedTrashPapel = 0;
 		collectedTrashPlastico = 0;
 		
-		
-		
 		//midisL.play(MUSIC, true);
 	}
 	
@@ -117,7 +115,7 @@ public class QuackPanel extends GamePanel {
 			playerBox.setBounds((int) player.getPos().getX(),
 								(int) (newY + player.getHeight()) + 1,
 								player.getWidth(),
-								player.getHeight());
+								1);
 			tile = map.checkTileCollision(playerBox);
 			if (tile == null && player.isOnGround()) {
 				player.setOnGround(false);
@@ -130,9 +128,7 @@ public class QuackPanel extends GamePanel {
 				player.getPos().setY(newY);
 				if (!player.isOnGround()) {
 					player.setOnGround(true);
-					System.out.println(" acabo de aterrizar piso");
 				}
-				
 			}
 			// Si esta saltando (moviendose hacia arriba), alinearlo al borde inferior del tile
 			else if (velY < 0) {
@@ -150,18 +146,8 @@ public class QuackPanel extends GamePanel {
 		int toTileX = TileMap.pixelsToTiles(player.getPos().getX() + player.getWidth());
 		int toTileY = TileMap.pixelsToTiles(player.getPos().getY() + player.getHeight());
 		
-<<<<<<< HEAD
-		ArrayList <Point> trashPieces = map.getTrashTiles(0);
-		Iterator <Point> iter = trashPieces.listIterator();
-		while (iter.hasNext()) {
-			Point trash = iter.next();
-			for (int x = fromTileX; x <= toTileX; x++) {
-				for (int y = fromTileY; y <= toTileY; y++) {
-					if (trash.x == x && trash.y == y) {
-						collectedTrashAluminio++;
-						iter.remove();
-						clipsL.play(PICKUP, false);
-=======
+
+
 		for (int i = 0; i < map.getTrashTilesSize(); i++) {
 			ArrayList <Point> trashPieces = map.getTrashTiles(i);
 			Iterator <Point> iter = trashPieces.listIterator();
@@ -170,11 +156,24 @@ public class QuackPanel extends GamePanel {
 				for (int x = fromTileX; x <= toTileX; x++) {
 					for (int y = fromTileY; y <= toTileY; y++) {
 						if (trash.x == x && trash.y == y) {
-							collectedTrash++;
+							switch (i) {
+							case 0:
+								collectedTrashAluminio++;
+								break;
+							case 1:
+								collectedTrashOrganica++;
+								break;
+							case 2:
+								collectedTrashPapel++;
+								break;
+							case 3:
+								collectedTrashPlastico++;
+								break;
+							}
 							iter.remove();
 							clipsL.play(PICKUP, false);
 						}
->>>>>>> QuackApps/master
+
 					}
 				}
 			}
@@ -196,7 +195,6 @@ public class QuackPanel extends GamePanel {
 	
 	protected void gameUpdate() {
 		player.update();
-		System.out.println(player.isOnGround() + "is on Ground");
 		checkCollisions();
 		checkTrash();
 	}
@@ -229,7 +227,7 @@ public class QuackPanel extends GamePanel {
 		}
 
 		/* Calculamos el offset en X */
-		int offsetX = (int) (PWIDTH / 2 - (player.getPos().getX() + player.getWidth()));
+		int offsetX = (int) (PWIDTH / 2 - (player.getPos().getX() + player.getWidth() / 2));
 		int max_offsetX = PWIDTH - TileMap.tilesToPixels(map.getWidth());
 		if (offsetX > 0) {
 			offsetX = 0;
@@ -239,7 +237,7 @@ public class QuackPanel extends GamePanel {
 		}
 		
 		/* Calculamos el offset en Y */
-		int offsetY = (int) (PHEIGHT / 2 - (player.getPos().getY() + player.getHeight()));
+		int offsetY = (int) (PHEIGHT / 2 - (player.getPos().getY() + player.getHeight() / 2));
 		int max_offsetY = PHEIGHT - TileMap.tilesToPixels(map.getHeight());
 		if (offsetY > 0) {
 			offsetY = 0;
@@ -303,7 +301,6 @@ public class QuackPanel extends GamePanel {
 										drawX,
 										drawY, this);
 				}
-				
 			}
 		}
 		
