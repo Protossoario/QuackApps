@@ -22,6 +22,7 @@ public class TileMap {
 	private static final int FIRST_TRASH = '1';
 	private static final int LAST_TRASH = '9';
 	
+	
 	// Guarda las imagenes de los tiles
 	private ArrayList <BufferedImage> tiles;
 	
@@ -33,6 +34,8 @@ public class TileMap {
 	// Arreglo de Points de dos dimensiones
 	// Guarda las posiciones de todos los pedazos de basura, para cada tipo de basura
 	private ArrayList <ArrayList <Point>> trashTiles;
+	private int trashTilesTotal;
+	private int[] trashTilesTypeTotal;
 	
 	// Matriz bidimensional que guarda el numero de tile que corresponde al subindice (i, j)
 	// Para cada subindice, se guarda un numero (0, 1, 2, etc.) que indica el numero de tile que es
@@ -51,6 +54,13 @@ public class TileMap {
 		
 		for (int i = 0; i < 4; i++) {
 			trashTiles.add(new ArrayList <Point>());
+		}
+		
+		trashTilesTotal = 0;
+		trashTilesTypeTotal = new int[4];
+		
+		for(int i=0; i<3; i++){
+			trashTilesTypeTotal[i]=0;
 		}
 		
 		loadMap("maps/" + file);
@@ -153,6 +163,16 @@ public class TileMap {
 				else if (isTrashTile(line.charAt(x))) {
 					int trashInd = line.charAt(x) - FIRST_TRASH;
 					trashTiles.get(trashInd).add(new Point(x, y));
+					if(line.charAt(x) == '1') {
+						trashTilesTypeTotal[0]++;
+					} else if(line.charAt(x) == '2'){
+						trashTilesTypeTotal[1]++;
+					}else if(line.charAt(x) == '3'){
+						trashTilesTypeTotal[2]++;
+					}else if(line.charAt(x) == '4'){
+						trashTilesTypeTotal[3]++;
+					}
+					trashTilesTotal++;
 				}
 				else if (line.charAt(x) == '*') {
 					playerSpawn = new Point(x, y);
@@ -227,6 +247,13 @@ public class TileMap {
 		return trashTiles.size();
 	}
 	
+	public int getTrashTilesTotal(){
+		return trashTilesTotal;
+	}
+	
+	public int getTrashTileTypeTotal(int trashTypeInd){
+		return trashTilesTypeTotal[trashTypeInd];
+	}
 	
 	public Point getSpikeTile(int spikeInd) {
 		return spikeTiles.get(spikeInd);
