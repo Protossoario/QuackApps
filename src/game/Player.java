@@ -22,6 +22,10 @@ public class Player extends GameObject implements KeyListener {
 	private Animation ducklingLeft;
 	private Animation ducklingRight;
 	
+	private ArrayList <ArrayBlockingQueue <Duckling>> ducklingFrames;
+	private double offsetDucklingX;
+	private double offsetDucklingY;
+	
 	private boolean leftPressed;
 	private boolean rightPressed;
 	private boolean upPressed;
@@ -31,7 +35,9 @@ public class Player extends GameObject implements KeyListener {
 	private boolean doubleJump;
 	private boolean jumping;
 	private boolean doubleJumping;
+	private boolean hit;
 	
+	private int hitFrameCounter;
 	private int lives;
 	
 	private static final double GRAVITY = 0.6;
@@ -42,15 +48,13 @@ public class Player extends GameObject implements KeyListener {
 	private static final double FRICTION = 0.65;
 	private static final double JUMP = 12.5;
 
-	private ArrayList <ArrayBlockingQueue <Duckling>> ducklingFrames;
-	private double offsetDucklingX;
-	private double offsetDucklingY;
-
 	private static final int FRAME = 5; // Duracion de un frame de la animacion del pato
 	private static final int SECOND = 60; // Duracion de un segundo en frames de animacion
 	private static final int MAX_LIVES = 5;
 	private static final int START_LIVES = 3;
 	private static final int FRAME_OFFSET = 15; // Cantidad de frames que separan a la animacion del pato, con el siguiente patito, y a este con el siguiente patito, etc.
+	private static final int HIT_FRAMES = 60;
+	private static final int HIT_FLICKER = 15;
 	
 	Player(GamePanel gp) {
 		super(gp);
@@ -171,6 +175,12 @@ public class Player extends GameObject implements KeyListener {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public void hit() {
+		hit = true;
+		lives--;
+		hitFrameCounter = 0;
+	}
 
 	private void updateAnimations() {
 		if (onGround) {
@@ -280,7 +290,18 @@ public class Player extends GameObject implements KeyListener {
 	}
 	
 	public void paint(Graphics g, int offsetX, int offsetY) {
-		super.paint(g, offsetX, offsetY);
+		if (hit) {
+			if (hitFrameCounter % HIT_FLICKER > HIT_FLICKER / 2) {
+				super.paint(g, offsetX, offsetY);
+			}
+			hitFrameCounter++;
+			if (hitFrameCounter == HIT_FRAMES) {
+				hit = false;
+			}
+		}
+		else {
+			super.paint(g, offsetX, offsetY);
+		}
 		
 		// Pintar los patitos
 		for (int i = 0; i < lives; i++) {
@@ -299,6 +320,10 @@ public class Player extends GameObject implements KeyListener {
 		}
 	}
 	
+	public boolean isHit() {
+		return hit;
+	}
+	
 	public boolean isOnGround() {
 		return onGround;
 	}
@@ -307,6 +332,10 @@ public class Player extends GameObject implements KeyListener {
 		this.onGround = onGround;
 		if (onGround && !upPressed) jumping = false;
 		if (doubleJumping) doubleJumping = false;
+	}
+	
+	public int getLives() {
+		return lives;
 	}
 	
 	public BufferedImage getCurrentImage() {

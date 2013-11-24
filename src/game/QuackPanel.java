@@ -20,6 +20,7 @@ import tiles.TileMap;
 @SuppressWarnings("serial")
 public class QuackPanel extends GamePanel {
 	private static final String BACKGROUND = "fondo.jpg";
+	private static final String GAME_OVER = "gameOver.png";
 	private static final String FONTS_DIR = "fonts/";
 	private static final String HUD_FONT = "FromWhereYouAre.ttf";
 	
@@ -37,6 +38,8 @@ public class QuackPanel extends GamePanel {
 	
 	private int[] trashCollected;
 	private static final String[] trashNames = {"basuraAluminio.png", "basuraOrganica.png", "basuraPapel.png", "basuraPlastico.png"};
+	
+	private boolean gameOver;
 	
 	public QuackPanel() {
 		super();
@@ -58,6 +61,8 @@ public class QuackPanel extends GamePanel {
 			e.setPos(TileMap.tilesToPixels(p.x), TileMap.tilesToPixels(p.y + 1) - e.getHeight());
 			enemies.add(e);
 		}
+		
+		gameOver = false;
 		
 		// Crear las fonts
 		try {
@@ -179,36 +184,78 @@ public class QuackPanel extends GamePanel {
 					}
 				}
 			}
-		}
+		}	
+	}
+	
+	private void checkSpikes(){
+		int fromTileX = TileMap.pixelsToTiles(player.getPos().getX());
+		int fromTileY = TileMap.pixelsToTiles(player.getPos().getY());
+		int toTileX = TileMap.pixelsToTiles(player.getPos().getX() + player.getWidth());
+		int toTileY = TileMap.pixelsToTiles(player.getPos().getY() + player.getHeight());
 		
+		for (int i = 0; i < map.getSpikeTilesSize(); i++){
+			Point spikeTile = map.getSpikeTile(i);
+			for (int x = fromTileX; x <= toTileX; x++) {
+				for (int y = fromTileY; y <= toTileY; y++) {
+					if (spikeTile.x == x && spikeTile.y == y) {
+						gameOver = true;
+					}
+				}
+			}
+		}
 	}
 	
 	protected void gameUpdate() {
-		player.update();
-		for (Enemy e : enemies) {
-			e.update();
-			
-			boolean edge = false;
-			boolean blocked = false;
-			// Checar espacio debajo
-			Rectangle rect = new Rectangle(	(int) e.getPos().getX(),
-											(int) e.getPos().getY() + e.getHeight() + 1,
-											e.getWidth(),
-											1);
-			edge = map.checkEmptySpace(rect);
-			// Checar colisiones en horizontal
-			rect.setBounds(	(int) e.getPos().getX(),
-							(int) e.getPos().getY(),
-							e.getWidth(),
-							e.getHeight());
-			blocked = map.checkTileCollision(rect) != null;
-			
-			if (edge || blocked) {
-				e.setFacingRight(!e.isFacingRight());
+		if (!gameOver) {
+			player.update();
+			for (Enemy e : enemies) {
+				e.update();
+				
+				boolean edge = false;
+				boolean blocked = false;
+				// Checar espacio debajo
+				Rectangle rect = new Rectangle(	(int) e.getPos().getX(),
+												(int) e.getPos().getY() + e.getHeight() + 1,
+												e.getWidth(),
+												1);
+				edge = map.checkEmptySpace(rect);
+				// Checar colisiones en horizontal
+				rect.setBounds(	(int) e.getPos().getX(),
+								(int) e.getPos().getY(),
+								e.getWidth(),
+								e.getHeight());
+				blocked = map.checkTileCollision(rect) != null;
+				
+				if (edge || blocked) {
+					e.setFacingRight(!e.isFacingRight());
+				}
+				
+				// Indica si el jugador es capaz de matar al enemigo, lo cual es cierto cuando el jugador esta cayendo
+				boolean canKill = player.getVel().getY() > 0;
+				boolean collides = player.collides(e);
+				if (collides) {
+					if (canKill) {
+						e.setMarkedForDeletion(true);
+					}
+					else if (!player.isHit()) {
+						player.hit();
+						if (player.getLives() == 0) {
+							gameOver = true;
+						}
+					}
+				}
 			}
+			Iterator <Enemy> iter = enemies.iterator();
+			while (iter.hasNext()) {
+				Enemy e = iter.next();
+				if (e.isMarkedForDeletion()) {
+					iter.remove();
+				}
+			}
+			checkCollisions();
+			checkTrash();
+			checkSpikes();
 		}
-		checkCollisions();
-		checkTrash();
 	}
 	
 	private void renderHUD(Graphics g) {
@@ -238,7 +285,7 @@ public class QuackPanel extends GamePanel {
 				dbg = dbImage.getGraphics();
 			}
 		}
-
+		
 		/* Calculamos el offset en X */
 		int offsetX = (int) (PWIDTH / 2 - (player.getPos().getX() + player.getWidth() / 2));
 		int max_offsetX = PWIDTH - TileMap.tilesToPixels(map.getWidth());
@@ -342,5 +389,8 @@ public class QuackPanel extends GamePanel {
 		}
 		
 		renderHUD(dbg);
+		if(gameOver){
+			dbg.drawImage(imageL.getImage(GAME_OVER), 0, 0, this);
+		}
 	}
 }

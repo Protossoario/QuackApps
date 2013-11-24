@@ -8,6 +8,7 @@ boteOrganica.png
 botePapel.png
 botePlastico.png
 fondo.jpg
+gameOver.png
 organicaIcon.png
 papelIcon.png
 patito1_left.png
@@ -53,7 +54,6 @@ rata7_left.png
 rata7_right.png
 rata8_left.png
 rata8_right.png
-spikes.png
 tile_0.png
 tile_1.png
 tile_2.png

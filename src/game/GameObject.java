@@ -76,6 +76,22 @@ public abstract class GameObject {
 		return (this.getCollisionRect()).intersects(go.getCollisionRect());
 	}
 	
+	/**
+	 * Codigo para checar colision entre objetos.
+	 * Utiliza los valores de sus posiciones y medidas.
+	 * @return Un booleano que indica si hay colision o no.
+	 */
+	public boolean collides(GameObject go) {
+		if (this == go) {
+			return false;
+		}
+		
+		return 	(pos.getX()  < go.getPos().getX() + go.getWidth()) &&
+				(go.getPos().getX() < pos.getX() + width) &&
+				(pos.getY()  < go.getPos().getY() + go.getHeight()) &&
+				(go.getPos().getY() < pos.getY() + height);
+	}
+	
 	abstract public Rectangle getCollisionRect();
 
 	/**
