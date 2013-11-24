@@ -21,12 +21,15 @@ public class TileMap {
 	private static final int LAST_TRASHCAN = 'z';
 	private static final int FIRST_TRASH = '1';
 	private static final int LAST_TRASH = '9';
+	private static final int ENEMY_TILE = '=';
+	private static final int PLAYER_TILE = '*';
 	
 	
 	// Guarda las imagenes de los tiles
 	private ArrayList <BufferedImage> tiles;
 	
 	private Point playerSpawn;
+	private ArrayList <Point> enemySpawns;
 	// Guarda las posiciones de cada tipo de bote de basura
 	private ArrayList <Point> trashCanTiles;
 	
@@ -50,10 +53,11 @@ public class TileMap {
 		tiles = new ArrayList <BufferedImage> ();
 		trashCanTiles = new ArrayList <Point> ();
 		trashTiles = new ArrayList <ArrayList <Point>> ();
-		spikeTiles = new ArrayList <Point>();
-		
+		spikeTiles = new ArrayList <Point> ();
+		enemySpawns = new ArrayList <Point> ();
 		for (int i = 0; i < 4; i++) {
 			trashTiles.add(new ArrayList <Point>());
+			trashCanTiles.add(new Point(-1, -1));
 		}
 		
 		trashTilesTotal = 0;
@@ -98,6 +102,29 @@ public class TileMap {
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Checa si hay un tile vacio dentro del area especificada por un rectangulo
+	 * @param rect El area donde se checa
+	 * @return Un valor booleano indicando si se encontro un tile vacio
+	 */
+	public boolean checkEmptySpace(Rectangle rect) {
+		int fromTileX = pixelsToTiles(rect.getMinX());
+		int fromTileY = pixelsToTiles(rect.getMinY());
+		int toTileX = pixelsToTiles(rect.getMaxX() - 1);
+		int toTileY = pixelsToTiles(rect.getMaxY() - 1);
+		
+		for (int x = fromTileX; x <= toTileX; x++) {
+			for (int y = fromTileY; y <= toTileY; y++) {
+				if (x < 0 || x >= map.length ||
+					map[x][y] == EMPTY_TILE) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
 	}
 	
 	private boolean isSolidTile(char tile) {
@@ -158,7 +185,7 @@ public class TileMap {
 					}
 				}
 				else if (isTrashCanTile(line.charAt(x))) {
-					trashCanTiles.add(line.charAt(x) - 'a', new Point(x, y));
+					trashCanTiles.set(line.charAt(x) - 'a', new Point(x, y));
 				}
 				else if (isTrashTile(line.charAt(x))) {
 					int trashInd = line.charAt(x) - FIRST_TRASH;
@@ -174,10 +201,12 @@ public class TileMap {
 					}
 					trashTilesTotal++;
 				}
-				else if (line.charAt(x) == '*') {
+				else if (line.charAt(x) == PLAYER_TILE) {
 					playerSpawn = new Point(x, y);
 				}
-
+				else if (line.charAt(x) == ENEMY_TILE) {
+					enemySpawns.add(new Point(x, y));
+				}
 			}
 		}
 	}
@@ -229,6 +258,10 @@ public class TileMap {
 	
 	public Point getPlayerSpawn() {
 		return playerSpawn;
+	}
+	
+	public ArrayList<Point> getEnemySpawns() {
+		return enemySpawns;
 	}
 	
 	public Point getTrashCanTile(int trashInd) {

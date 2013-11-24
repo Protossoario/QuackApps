@@ -30,6 +30,7 @@ public class QuackPanel extends GamePanel {
 	
 	private static final float HUD_FONT_SIZE = 16f;
 	
+	private ArrayList <Enemy> enemies;
 	private Player player;
 	private TileMap map;
 	private Graphics dbg;
@@ -51,9 +52,18 @@ public class QuackPanel extends GamePanel {
 		midisL = new MidisLoader("midis.txt");
 		
 		player = new Player(this);
+		enemies = new ArrayList <Enemy> ();
 		map = new TileMap("level1.txt", this);
 		Point playerSpawn = map.getPlayerSpawn();
 		player.setPos(TileMap.tilesToPixels(playerSpawn.x), TileMap.tilesToPixels(playerSpawn.y));
+		ArrayList <Point> enemySpawns = map.getEnemySpawns();
+		for (Point p : enemySpawns) {
+			Enemy e = new Enemy(this);
+			// Se toma el tile de abajo del spawn y se le resta la altura del enemigo
+			// Esto para que este alineado al piso (i.e. al borde superior del tile de abajo de su spawn)
+			e.setPos(TileMap.tilesToPixels(p.x), TileMap.tilesToPixels(p.y + 1) - e.getHeight());
+			enemies.add(e);
+		}
 		
 		gameOver = false;
 		
@@ -76,7 +86,7 @@ public class QuackPanel extends GamePanel {
 		trashCollected = new int[4];
 		trashTypeCollectedTotal = new int[4];
 		
-		midisL.play(MUSIC, true);
+		//midisL.play(MUSIC, true);
 	}
 	
 	private void checkCollisions() {
@@ -152,8 +162,6 @@ public class QuackPanel extends GamePanel {
 		int toTileX = TileMap.pixelsToTiles(player.getPos().getX() + player.getWidth());
 		int toTileY = TileMap.pixelsToTiles(player.getPos().getY() + player.getHeight());
 		
-
-
 		for (int i = 0; i < map.getTrashTilesSize(); i++) {
 			ArrayList <Point> trashPieces = map.getTrashTiles(i);
 			Iterator <Point> iter = trashPieces.listIterator();
@@ -206,8 +214,52 @@ public class QuackPanel extends GamePanel {
 	}
 	
 	protected void gameUpdate() {
-		if(!gameOver){
+		if (!gameOver) {
 			player.update();
+			for (Enemy e : enemies) {
+				e.update();
+				
+				boolean edge = false;
+				boolean blocked = false;
+				// Checar espacio debajo
+				Rectangle rect = new Rectangle(	(int) e.getPos().getX(),
+												(int) e.getPos().getY() + e.getHeight() + 1,
+												e.getWidth(),
+												1);
+				edge = map.checkEmptySpace(rect);
+				// Checar colisiones en horizontal
+				rect.setBounds(	(int) e.getPos().getX(),
+								(int) e.getPos().getY(),
+								e.getWidth(),
+								e.getHeight());
+				blocked = map.checkTileCollision(rect) != null;
+				
+				if (edge || blocked) {
+					e.setFacingRight(!e.isFacingRight());
+				}
+				
+				// Indica si el jugador es capaz de matar al enemigo, lo cual es cierto cuando el jugador esta cayendo
+				boolean canKill = player.getVel().getY() > 0;
+				boolean collides = player.collides(e);
+				if (collides) {
+					if (canKill) {
+						e.setMarkedForDeletion(true);
+					}
+					else if (!player.isHit()) {
+						player.hit();
+						if (player.getLives() == 0) {
+							gameOver = true;
+						}
+					}
+				}
+			}
+			Iterator <Enemy> iter = enemies.iterator();
+			while (iter.hasNext()) {
+				Enemy e = iter.next();
+				if (e.isMarkedForDeletion()) {
+					iter.remove();
+				}
+			}
 			checkCollisions();
 			checkTrash();
 			checkSpikes();
@@ -327,6 +379,11 @@ public class QuackPanel extends GamePanel {
 		
 		/* Pintar al jugador */
 		player.paint(dbg, offsetX, offsetY);
+		
+		/* Pintar los enemigos */
+		for (Enemy e : enemies) {
+			e.paint(dbg, offsetX, offsetY);
+		}
 		
 		/* Pintar los pedazos de basura */
 		for (int i = 0; i < map.getTrashTilesSize(); i++) {
