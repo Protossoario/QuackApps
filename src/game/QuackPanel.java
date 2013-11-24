@@ -189,6 +189,9 @@ public class QuackPanel extends GamePanel {
 						trashTypeCollectedTotal[i] += trashCollected[i];
 						trashCollected[i] = 0;
 						clipsL.play(COINS, false);
+						if(map.getTrashTileTypeTotal(0) >= trashTypeCollectedTotal[0]){
+								player.setDoubleJump(true);
+						}
 					}
 				}
 			}
@@ -212,6 +215,7 @@ public class QuackPanel extends GamePanel {
 			}
 		}
 	}
+	
 	
 	protected void gameUpdate() {
 		if (!gameOver) {

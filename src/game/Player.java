@@ -168,7 +168,7 @@ public class Player extends GameObject implements KeyListener {
 		}
 		
 		// Habilitar doble salto
-		doubleJump = true;
+		doubleJump = false;
 	}
 
 	public Rectangle getCollisionRect() {
@@ -381,5 +381,13 @@ public class Player extends GameObject implements KeyListener {
 			this.pos = pos;
 			this.animationFrame = animationFrame;
 		}
+	}
+	
+	public void setDoubleJump(boolean b){
+		doubleJump = b;
+	}
+	
+	public boolean getDoubleJump(){
+		return doubleJump;
 	}
 }
