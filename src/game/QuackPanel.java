@@ -243,6 +243,7 @@ public class QuackPanel extends GamePanel {
 				boolean collides = player.collides(e);
 				if (collides) {
 					if (canKill) {
+						player.getVel().setY(-player.getVel().getY());
 						e.setMarkedForDeletion(true);
 					}
 					else if (!player.isHit()) {
