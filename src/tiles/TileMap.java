@@ -58,8 +58,8 @@ public class TileMap {
 		
 		for (int x = fromTileX; x <= toTileX; x++) {
 			for (int y = fromTileY; y <= toTileY; y++) {
-				if ((x < 0 || x >= map.length) ||
-					(y < 0 || y >= map[0].length) ||
+				if (x < 0 || x >= map.length ||
+					y < 0 || y >= map[0].length ||
 					map[x][y] != EMPTY_TILE) {
 					return new Point(x, y);
 				}
