@@ -1,26 +1,39 @@
-# A es tierra
-# B es tierra con pasto
-# C es el borde izquierdo de la nube
-# D es el centro de la nube
-# E es el borde derecho de la nube
-# * es la posicion inicial del jugador
-# a es el bote de basura tipo 1
-# b es el bote de basura tipo 2
-# c es el bote de basura tipo 3
-# 1 es la basura tipo 1
-# 2 es la basura tipo 2
-# 3 es la basura tipo 3
 
 
-                                1       CDDDDE
-                              CDDDDE
 
-                      BBBBBB              a      CDDDDE
-                             CE         CDDDDE            BBB
-                 1 1            BB                        AAA
-                BBBBB           AA111             1    BBBAAA
-               BAAAAA           AABBBB           1BB
-              BAAAAAABB                         BBAA
-  *      1   BAAAAAAAAA     1 1 1 1 1         BBAAAA
-BBBBBBBBBBBBBAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBAAAAAABBBBBBBBBBBBB
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+
+   CDDE
+           CDDE                                                                                                                                          BBBBBBB
+                                                                                                                                   CDDDDDDDDDDDDE         AAAAAA
+                  CDDDE                                                                                                                                    AAAAA
+                                                                                                                                                            AAAA
+            BBBB                                                                                                                                             AAA
+           BAAAAB                                                                                                         BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBAAAA   
+         BBAAAAAABB                                                                                          CDDDDDDDE    AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+  *    BBAAAAAAAAAABB                                                                           CDDDDDDDE                 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+BBBBBBBAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBB           BBBBBBBBB       BBBBBBBBBBBB     BBBBBB                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA           AAAAAAAAA     BBAAAAAAAAAAAA     AAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA                                                                                                  
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA        BBBAAAAAAAAA       AAAAAAAAAAAA    BAAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBB    AAAAAAAAAAAABB     AAAAAAAAAAAA     AAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA        AAAAAAAA       AAAAAAAAAAAAB    AAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAA                                       AAAAAAAA     BBAAAAAAAAAAAA     AAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAA                                       AAAAAAAA       AAAAAAAAAAAABBBBBAAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAA                                       AAAAAAAABB     AAAAAAAAAAAAAAAAAAAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAA                                       AAAAAAAA       AAAAAAAAAAAAAAAAAAAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAA                      BBB                        AAAAAAAA     BBAAAAAAAAAAAAAAAAAAAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAA             B     BBBAAABBB                     AAAAAAAA       AAAAAAAAAAAAAAAAAAAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAA      AAAA                      BBB    BBB       AAAAAAAABB     AAAAAAAAAAAAAAAAAAAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAA      AAAA                BB                  BBBAAAAAAAA       AAAAAAAAAAAAAAAAAAAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAA      AAAA                                    AAAAAAAAAAA     BBAAAAAAAAAAAAAAAAAAAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAA      AAAA                                  BBAAAAAAAAAAA       AAAAAAAAAAAAAAAAAAAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAA      AAAA                                  AAAAAAAAAAAAABB     AAAAAAAAAAAAAAAAAAAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAA      AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA       AAAAAAAAAAAAAAAAAAAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAA      AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA     BBAAAAAAAAAAAAAAAAAAAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAA      AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA       AAAAAAAAAAAAAAAAAAAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAA      AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABB     AAAAAAAAAAAAAAAAAAAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAA                                                                AAAAAAAAAAAAAAAAAAAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAA                                                              BBAAAAAAAAAAAAAAAAAAAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAA                                                             BAAAAAAAAAAAAAAAAAAAAAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAA                                                            BAAAAAAAAAAAAAAAAAAAAAAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA                              AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
