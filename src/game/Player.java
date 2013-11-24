@@ -27,6 +27,9 @@ public class Player extends GameObject implements KeyListener {
 	private boolean upPressed;
 	private boolean onGround;
 	private boolean facingRight;
+	private boolean doubleJump;
+	private boolean jumping;
+	private boolean doubleJumping;
 	
 	private int lives;
 	
@@ -36,7 +39,7 @@ public class Player extends GameObject implements KeyListener {
 	private static final double AIR_ACCEL = 0.75; //Modifica la velocidad horizontal durante el salto
 	private static final double MAX_SPEED = 8; //Modifica la velocidad maxima horizontal que puede alcanzar el pato
 	private static final double FRICTION = 0.65;
-	private static final double JUMP = 10;
+	private static final double JUMP = 12.5;
 
 	private ArrayList <ArrayBlockingQueue <Duckling>> ducklingFrames;
 	private double offsetDucklingX;
@@ -158,6 +161,9 @@ public class Player extends GameObject implements KeyListener {
 			}
 			ducklingFrames.add(queue);
 		}
+		
+		// Habilitar doble salto
+		doubleJump = true;
 	}
 
 	public Rectangle getCollisionRect() {
@@ -231,8 +237,9 @@ public class Player extends GameObject implements KeyListener {
 				}
 			}
 			
-			if (upPressed) {
+			if (upPressed && !jumping) {
 				vel.setY(-JUMP);
+				jumping = true;
 			}
 		}
 		else {
@@ -245,6 +252,10 @@ public class Player extends GameObject implements KeyListener {
 			else {
 				accel.setX(0);
 			}
+			
+			/*if (doubleJump && upPressed && !jumping && !doubleJumping) {
+				vel.setY(-JUMP);
+			}*/
 			
 			vel.setY(vel.getY() + accel.getY());
 		}
@@ -291,6 +302,7 @@ public class Player extends GameObject implements KeyListener {
 	
 	public void setOnGround(boolean onGround) {
 		this.onGround = onGround;
+		if (onGround && !upPressed) jumping = false;
 	}
 	
 	public BufferedImage getCurrentImage() {
@@ -328,6 +340,7 @@ public class Player extends GameObject implements KeyListener {
 		}
 		else if (code == KeyEvent.VK_UP) {
 			upPressed = false;
+			if (onGround) jumping = false;
 		}
 	}
 	
