@@ -34,10 +34,8 @@ public class QuackPanel extends GamePanel {
 	private Graphics dbg;
 	private Font HUDFont;
 	
-	private int collectedTrashAluminio;
-	private int collectedTrashOrganica;
-	private int collectedTrashPapel;
-	private int collectedTrashPlastico;
+	private int[] trashCollected;
+	private static final String[] trashNames = {"basuraAluminio.png", "basuraOrganica.png", "basuraPapel.png", "basuraPlastico.png"};
 	
 	public QuackPanel() {
 		super();
@@ -65,12 +63,9 @@ public class QuackPanel extends GamePanel {
 		
 		addKeyListener(player);
 		
-		collectedTrashAluminio= 0;
-		collectedTrashOrganica =0;
-		collectedTrashPapel = 0;
-		collectedTrashPlastico = 0;
+		trashCollected = new int[4];
 		
-		//midisL.play(MUSIC, true);
+		midisL.play(MUSIC, true);
 	}
 	
 	private void checkCollisions() {
@@ -146,6 +141,8 @@ public class QuackPanel extends GamePanel {
 		int toTileX = TileMap.pixelsToTiles(player.getPos().getX() + player.getWidth());
 		int toTileY = TileMap.pixelsToTiles(player.getPos().getY() + player.getHeight());
 		
+
+
 		for (int i = 0; i < map.getTrashTilesSize(); i++) {
 			ArrayList <Point> trashPieces = map.getTrashTiles(i);
 			Iterator <Point> iter = trashPieces.listIterator();
@@ -154,23 +151,11 @@ public class QuackPanel extends GamePanel {
 				for (int x = fromTileX; x <= toTileX; x++) {
 					for (int y = fromTileY; y <= toTileY; y++) {
 						if (trash.x == x && trash.y == y) {
-							switch (i) {
-							case 0:
-								collectedTrashAluminio++;
-								break;
-							case 1:
-								collectedTrashOrganica++;
-								break;
-							case 2:
-								collectedTrashPapel++;
-								break;
-							case 3:
-								collectedTrashPlastico++;
-								break;
-							}
+							trashCollected[i]++;
 							iter.remove();
 							clipsL.play(PICKUP, false);
 						}
+
 					}
 				}
 			}
@@ -180,8 +165,8 @@ public class QuackPanel extends GamePanel {
 			Point trashCan = map.getTrashCanTile(i);
 			for (int x = fromTileX; x <= toTileX; x++) {
 				for (int y = fromTileY; y <= toTileY; y++) {
-					if (trashCan.x == x && trashCan.y == y && collectedTrashAluminio > 0) {
-						collectedTrashAluminio = 0;
+					if (trashCan.x == x && trashCan.y == y && trashCollected[i] > 0) {
+						trashCollected[i] = 0;
 						clipsL.play(COINS, false);
 					}
 				}
@@ -205,10 +190,11 @@ public class QuackPanel extends GamePanel {
 			g.setFont(HUDFont);
 		}
 		g.setColor(Color.BLACK);
-		g.drawString("X " + collectedTrashAluminio, 35, 30);
-		g.drawString("X " + collectedTrashOrganica, 110, 30);
-		g.drawString("X " + collectedTrashPapel, 185, 30);
-		g.drawString("X " + collectedTrashPlastico, 265, 30);
+		g.drawString("X " + trashCollected[0], 35, 30);
+		g.drawString("X " + trashCollected[1], 110, 30);
+		g.drawString("X " + trashCollected[2], 185, 30);
+		g.drawString("X " + trashCollected[3], 265, 30);
+
 	}
 
 	protected void gameRender() {
@@ -313,9 +299,9 @@ public class QuackPanel extends GamePanel {
 					trash.y >= fromTileY && trash.y <= toTileY) {
 					int drawX = TileMap.tilesToPixels(trash.x) + offsetX;
 					int drawY = TileMap.tilesToPixels(trash.y) + offsetY;
-					dbg.drawImage(imageL.getImage("basuraAluminio.png"),
-									drawX,
-									drawY, this);
+					dbg.drawImage(imageL.getImage(trashNames[i]),
+										drawX,
+										drawY, this);
 				}
 			}
 		}
