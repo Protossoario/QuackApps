@@ -19,7 +19,7 @@ import tiles.TileMap;
 
 @SuppressWarnings("serial")
 public class QuackPanel extends GamePanel {
-	private static final String BACKGROUND = "fondo.png";
+	private static final String BACKGROUND = "fondo.jpg";
 	private static final String FONTS_DIR = "fonts/";
 	private static final String HUD_FONT = "FromWhereYouAre.ttf";
 	
@@ -224,7 +224,7 @@ public class QuackPanel extends GamePanel {
 		}
 
 		/* Calculamos el offset en X */
-		int offsetX = (int) (PWIDTH / 2 - (player.getPos().getX() + player.getWidth()));
+		int offsetX = (int) (PWIDTH / 2 - (player.getPos().getX() + player.getWidth() / 2));
 		int max_offsetX = PWIDTH - TileMap.tilesToPixels(map.getWidth());
 		if (offsetX > 0) {
 			offsetX = 0;
@@ -234,7 +234,7 @@ public class QuackPanel extends GamePanel {
 		}
 		
 		/* Calculamos el offset en Y */
-		int offsetY = (int) (PHEIGHT / 2 - (player.getPos().getY() + player.getHeight()));
+		int offsetY = (int) (PHEIGHT / 2 - (player.getPos().getY() + player.getHeight() / 2));
 		int max_offsetY = PHEIGHT - TileMap.tilesToPixels(map.getHeight());
 		if (offsetY > 0) {
 			offsetY = 0;
