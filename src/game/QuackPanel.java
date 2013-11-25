@@ -12,15 +12,19 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import sound.ClipsLoader;
 import sound.MidisLoader;
 import tiles.TileMap;
 
 @SuppressWarnings("serial")
-public class QuackPanel extends GamePanel {
+public class QuackPanel extends GamePanel implements MouseListener{
 	private static final String BACKGROUND = "fondo.jpg";
 	private static final String GAME_OVER = "gameOver.png";
+	private static final String GAME_WIN = "gameWin.png";
+	private static final String PAUSE = "pause.png";
 	private static final String FONTS_DIR = "fonts/";
 	private static final String HUD_FONT = "FromWhereYouAre.ttf";
 	
@@ -42,13 +46,14 @@ public class QuackPanel extends GamePanel {
 	private int[] trashTypeCollectedTotal;
 	
 	private boolean gameOver;
+	private boolean gameWin;
 	
 	private int levelCounter = 1;
 	
 	
 	public QuackPanel() {
 		super();
-
+		 addMouseListener(this);
 		initialize("level" + levelCounter + ".txt");
 
 	}
@@ -206,9 +211,12 @@ public class QuackPanel extends GamePanel {
 		}
 		
 		if(trashCollectedTotal >= map.getTrashTilesTotal()){
+			gameWin = true;
 			midisL.stop();
-			levelCounter++;
-			initialize("level" + levelCounter + ".txt");
+			if(map.peekMap("level" + levelCounter+1 + ".txt")) {
+				levelCounter++;
+				initialize("level" + levelCounter + ".txt");
+			}
 		}
 	}
 	
@@ -223,6 +231,7 @@ public class QuackPanel extends GamePanel {
 			for (int x = fromTileX; x <= toTileX; x++) {
 				for (int y = fromTileY; y <= toTileY; y++) {
 					if (spikeTile.x == x && spikeTile.y == y) {
+						midisL.stop();
 						gameOver = true;
 					}
 				}
@@ -231,8 +240,9 @@ public class QuackPanel extends GamePanel {
 	}
 	
 	
+	
 	protected void gameUpdate() {
-		if (!gameOver && !player.getIsPaused()) {
+		if (!gameOver && !player.getIsPaused() && !gameWin) {
 			player.update();
 			for (Enemy e : enemies) {
 				e.update();
@@ -267,6 +277,7 @@ public class QuackPanel extends GamePanel {
 					else if (!player.isHit()) {
 						player.hit();
 						if (player.getLives() == 0) {
+							midisL.stop();
 							gameOver = true;
 						}
 					}
@@ -283,6 +294,7 @@ public class QuackPanel extends GamePanel {
 			checkTrash();
 			checkSpikes();
 		}
+		
 	}
 	
 	private void renderHUD(Graphics g) {
@@ -305,6 +317,9 @@ public class QuackPanel extends GamePanel {
 		g.drawString(trashTypeCollectedTotal[3] + "/" + map.getTrashTileTypeTotal(3), 252, 38);
 	}
 
+	
+    
+	
 	protected void gameRender() {
 		if (dbImage == null) { // inicializar la imagen buffer si es que no lo esta
 			dbImage = getImageLoader().createCompatible(getWidth(), getHeight(), BufferedImage.BITMASK);
@@ -423,5 +438,45 @@ public class QuackPanel extends GamePanel {
 		if(gameOver){
 			dbg.drawImage(imageL.getImage(GAME_OVER), 0, 0, this);
 		}
+		
+		if(gameWin){
+			dbg.drawImage(imageL.getImage(GAME_WIN), 0, 0, this);
+		}
+		
+		if(player.getIsPaused() && !gameOver && !gameWin){
+			dbg.drawImage(imageL.getImage(PAUSE), 0, 0, this);
+		}
+		
+		
 	}
+	
+		public void mousePressed(MouseEvent e) {
+			if(e.getX()>= 554 && e.getX() <= 554+223 && gameOver ){
+				initialize("level" + levelCounter + ".txt");
+			} 
+			
+			if(gameWin) {
+				if(e.getX()>= 554 && e.getX() <= 554+223){
+					gameWin = false;
+					initialize("level" + levelCounter + ".txt");
+				} 
+			}	
+		}
+
+		public void mouseReleased(MouseEvent e) {
+
+		}
+
+		public void mouseEntered(MouseEvent e) {
+
+		}
+
+		public void mouseExited(MouseEvent e) {
+
+		}
+
+		public void mouseClicked(MouseEvent e) {
+
+		}
+
 }
