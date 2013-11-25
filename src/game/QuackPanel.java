@@ -24,6 +24,9 @@ public class QuackPanel extends GamePanel implements MouseListener{
 	private static final String BACKGROUND = "fondo.jpg";
 	private static final String GAME_OVER = "gameOver.png";
 	private static final String GAME_WIN = "gameWin.png";
+	private static final String MAIN_MENU = "mainMenu.png";
+	private static final String CREDITS = "credits.png";
+	private static final String INSTRUCTIONS = "instructions.png";
 	private static final String PAUSE = "pause.png";
 	private static final String FONTS_DIR = "fonts/";
 	private static final String HUD_FONT = "FromWhereYouAre.ttf";
@@ -47,13 +50,17 @@ public class QuackPanel extends GamePanel implements MouseListener{
 	
 	private boolean gameOver;
 	private boolean gameWin;
+	private boolean mainMenu;
+	private boolean credits;
+	private boolean instructions;
 	
 	private int levelCounter = 1;
 	
 	
 	public QuackPanel() {
 		super();
-		 addMouseListener(this);
+		mainMenu = true;
+		addMouseListener(this);
 		initialize("level" + levelCounter + ".txt");
 
 	}
@@ -239,7 +246,7 @@ public class QuackPanel extends GamePanel implements MouseListener{
 	
 	
 	protected void gameUpdate() {
-		if (!gameOver && !player.getIsPaused() && !gameWin) {
+		if (!gameOver && !player.getIsPaused() && !gameWin && !mainMenu) {
 			player.update();
 			for (Enemy e : enemies) {
 				e.update();
@@ -440,7 +447,19 @@ public class QuackPanel extends GamePanel implements MouseListener{
 			dbg.drawImage(imageL.getImage(GAME_WIN), 0, 0, this);
 		}
 		
-		if(player.getIsPaused() && !gameOver && !gameWin){
+		if(mainMenu){
+			dbg.drawImage(imageL.getImage(MAIN_MENU), 0, 0, this);
+		}
+		
+		if(credits){
+			dbg.drawImage(imageL.getImage(CREDITS), 0, 0, this);
+		}
+		
+		if(instructions){
+			dbg.drawImage(imageL.getImage(INSTRUCTIONS), 0, 0, this);
+		}
+		
+		if(player.getIsPaused() && !gameOver && !gameWin && !mainMenu){
 			dbg.drawImage(imageL.getImage(PAUSE), 0, 0, this);
 		}
 		
@@ -448,11 +467,51 @@ public class QuackPanel extends GamePanel implements MouseListener{
 	}
 	
 		public void mousePressed(MouseEvent e) {
-			if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 539 && e.getY() <= 539+49 && gameOver ){
-				initialize("level" + levelCounter + ".txt");
-			} 
+			if(mainMenu){
+				if(e.getX()>= 122 && e.getX() <= 122+454 && e.getY()>= 183 && e.getY() <= 183+91 && !credits && !instructions){
+					mainMenu = false;
+				}
+				
+				if(e.getX()>= 122 && e.getX() <= 122+454 && e.getY()>= 341 && e.getY() <= 341+91 && !credits){
+					instructions = true;
+				}
+				
+				if(e.getX()>= 122 && e.getX() <= 122+454 && e.getY()>= 463 && e.getY() <= 463+91 && !instructions){
+					credits = true;
+				}
+				
+			}
+			
+			if(credits){
+				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 539 && e.getY() <= 539+49){
+					credits = false;
+				} 
+			}
+			
+			if(instructions){
+				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 539 && e.getY() <= 539+49){
+					instructions = false;
+				} 
+			}
+			
+			if(gameOver){
+				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 484 && e.getY() <= 484+49){
+					mainMenu = true;
+					initialize("level1.txt");
+				} 
+				
+				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 539 && e.getY() <= 539+49){
+					initialize("level" + levelCounter + ".txt");
+				} 
+			}
+			
 			
 			if(gameWin) {
+				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 443 && e.getY() <= 443+49){
+					mainMenu = true;
+					initialize("level1.txt");
+				} 
+				
 				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 539 && e.getY() <= 539+49){
 					if(map.peekMap("level" + levelCounter + ".txt")) {
 						initialize("level" + levelCounter + ".txt");
