@@ -79,6 +79,7 @@ public class QuackPanel extends GamePanel implements MouseListener{
 		}
 		
 		gameOver = false;
+		gameWin = false;
 		
 		
 		// Crear las fonts
@@ -213,10 +214,6 @@ public class QuackPanel extends GamePanel implements MouseListener{
 		if(trashCollectedTotal >= map.getTrashTilesTotal()){
 			gameWin = true;
 			midisL.stop();
-			if(map.peekMap("level" + levelCounter+1 + ".txt")) {
-				levelCounter++;
-				initialize("level" + levelCounter + ".txt");
-			}
 		}
 	}
 	
@@ -451,14 +448,26 @@ public class QuackPanel extends GamePanel implements MouseListener{
 	}
 	
 		public void mousePressed(MouseEvent e) {
-			if(e.getX()>= 554 && e.getX() <= 554+223 && gameOver ){
+			if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 539 && e.getY() <= 539+49 && gameOver ){
 				initialize("level" + levelCounter + ".txt");
 			} 
 			
 			if(gameWin) {
-				if(e.getX()>= 554 && e.getX() <= 554+223){
-					gameWin = false;
-					initialize("level" + levelCounter + ".txt");
+				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 539 && e.getY() <= 539+49){
+					if(map.peekMap("level" + levelCounter + ".txt")) {
+						initialize("level" + levelCounter + ".txt");
+					}
+				}
+				
+				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 490 && e.getY() <= 490+49){
+					levelCounter++;
+					if(map.peekMap("level" + levelCounter + ".txt")) {
+						initialize("level" + levelCounter + ".txt");
+					}
+					else{
+						levelCounter = 1;
+						initialize("level" + levelCounter + ".txt");
+					}
 				} 
 			}	
 		}
