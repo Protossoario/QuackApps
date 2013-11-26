@@ -46,6 +46,8 @@ public class QuackPanel extends GamePanel implements MouseListener{
 	private int trashCollectedTotal;
 	private int[] trashCollected;
 	private static final String[] trashNames = {"basuraAluminio.png", "basuraOrganica.png", "basuraPapel.png", "basuraPlastico.png"};
+	private static final String DUCKHIT = "duck1";
+	private static final String ENEMYHIT = "hit";
 	private int[] trashTypeCollectedTotal;
 	
 	private boolean gameOver;
@@ -274,11 +276,13 @@ public class QuackPanel extends GamePanel implements MouseListener{
 				boolean collides = player.collides(e);
 				if (collides) {
 					if (canKill) {
+						clipsL.play(ENEMYHIT, false);
 						player.getVel().setY(-player.getVel().getY());
 						e.setMarkedForDeletion(true);
 					}
 					else if (!player.isHit()) {
 						player.hit();
+						clipsL.play(DUCKHIT, false);
 						if (player.getLives() == 0) {
 							midisL.stop();
 							gameOver = true;
