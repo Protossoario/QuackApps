@@ -428,11 +428,10 @@ public class QuackPanel extends GamePanel implements MouseListener{
 			for (Point trash : trashPieces) {
 				if (trash.x >= fromTileX && trash.x <= toTileX &&
 					trash.y >= fromTileY && trash.y <= toTileY) {
-					int drawX = TileMap.tilesToPixels(trash.x) + offsetX;
-					int drawY = TileMap.tilesToPixels(trash.y) + offsetY;
-					dbg.drawImage(imageL.getImage(trashNames[i]),
-										drawX,
-										drawY, this);
+					BufferedImage img = imageL.getImage(trashNames[i]);
+					int drawX = TileMap.tilesToPixels(trash.x) + offsetX + img.getWidth() / 2;
+					int drawY = TileMap.tilesToPixels(trash.y) + offsetY + img.getHeight() / 2;
+					dbg.drawImage(img, drawX, drawY, this);
 				}
 			}
 		}
