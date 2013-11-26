@@ -62,7 +62,6 @@ public class QuackPanel extends GamePanel implements MouseListener{
 		mainMenu = true;
 		addMouseListener(this);
 		initialize("level" + levelCounter + ".txt");
-
 	}
 	
 	public void initialize(String file){

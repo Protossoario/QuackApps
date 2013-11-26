@@ -361,10 +361,8 @@ public class Player extends GameObject implements KeyListener {
 		else if (code == KeyEvent.VK_P){
 			if(isPaused){
 				isPaused = false;
-				System.out.println("apague pausa" + isPaused);
 			}else if(!isPaused){
 				isPaused = true;
-				System.out.println("prendi pausa" + isPaused);
 			}
 		}
 	}
