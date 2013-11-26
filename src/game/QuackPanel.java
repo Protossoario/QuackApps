@@ -495,30 +495,30 @@ public class QuackPanel extends GamePanel implements MouseListener{
 			}
 			
 			if(gameOver){
-				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 484 && e.getY() <= 484+49){
+				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 539 && e.getY() <= 539+49){
 					mainMenu = true;
 					initialize("level1.txt");
 				} 
 				
-				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 539 && e.getY() <= 539+49){
+				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 484 && e.getY() <= 484+49){
 					initialize("level" + levelCounter + ".txt");
 				} 
 			}
 			
 			
 			if(gameWin) {
-				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 443 && e.getY() <= 443+49){
+				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 539 && e.getY() <= 539+49){
 					mainMenu = true;
 					initialize("level1.txt");
 				} 
 				
-				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 539 && e.getY() <= 539+49){
+				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 490 && e.getY() <= 490+49){
 					if(map.peekMap("level" + levelCounter + ".txt")) {
 						initialize("level" + levelCounter + ".txt");
 					}
 				}
 				
-				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 490 && e.getY() <= 490+49){
+				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 443 && e.getY() <= 443+49){
 					levelCounter++;
 					if(map.peekMap("level" + levelCounter + ".txt")) {
 						initialize("level" + levelCounter + ".txt");
