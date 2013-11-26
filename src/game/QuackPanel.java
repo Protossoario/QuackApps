@@ -517,14 +517,12 @@ public class QuackPanel extends GamePanel implements MouseListener{
 				} 
 				
 				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 490 && e.getY() <= 490+49){
-					if(map.peekMap("level" + levelCounter + ".txt")) {
-						initialize("level" + levelCounter + ".txt");
-					}
+						initialize("level" + levelCounter + ".txt");	
 				}
 				
 				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 443 && e.getY() <= 443+49){
 					levelCounter++;
-					if(map.peekMap("level" + levelCounter + ".txt")) {
+					if(map.peekMap("maps/level" + levelCounter + ".txt")) {
 						initialize("level" + levelCounter + ".txt");
 					}
 					else{
