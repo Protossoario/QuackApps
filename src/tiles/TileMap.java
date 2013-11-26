@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.io.File;
 
 public class TileMap {
 	private static final int TILE_SIZE = 64;
@@ -154,14 +153,11 @@ public class TileMap {
 	 * Metodo para leer el archivo de texto y cargar los datos a la matriz de enteros
 	 * @param fname Indica el nombre del archivo a leer, con su directorio
 	 */
-	private boolean loadMap(String fname) {
+	private void loadMap(String fname) {
 		int max_length = 0;
 		ArrayList <String> lines = new ArrayList <String> ();
 		try {
 			InputStream in = this.getClass().getClassLoader().getResourceAsStream(fname);
-			if(in == null){
-				return false;
-			}
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 			
 			String line;
@@ -177,7 +173,6 @@ public class TileMap {
 		}
 		catch (IOException ex) {
 			System.out.println("Error al leer el archivo del mapa: " + fname);
-			
 		}
 		
 		map = new int[max_length][lines.size()];
@@ -222,36 +217,6 @@ public class TileMap {
 				}
 			}
 		}
-		return true;
-	}
-	
-	public boolean peekMap(String fname){
-		int max_length = 0;
-		ArrayList <String> lines = new ArrayList <String> ();
-		try {
-			InputStream in = this.getClass().getClassLoader().getResourceAsStream(fname);
-			if(in == null){
-				System.out.println("no hay nivel " + fname);
-				return false;
-			}
-			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-			
-			String line;
-			while ((line = reader.readLine()) != null) {
-				if (!line.startsWith("#")) {
-					lines.add(line);
-					if (line.length() > max_length) {
-						max_length = line.length();
-					}
-				}
-			}
-			reader.close();
-		}
-		catch (IOException ex) {
-			System.out.println("Error al leer el archivo del mapa: " + fname);
-			
-		}
-		return true;
 	}
 	
 	/**

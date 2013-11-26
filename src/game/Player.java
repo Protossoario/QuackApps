@@ -36,7 +36,6 @@ public class Player extends GameObject implements KeyListener {
 	private boolean jumping;
 	private boolean doubleJumping;
 	private boolean hit;
-	private boolean isPaused;
 	
 	private int hitFrameCounter;
 	private int lives;
@@ -150,7 +149,6 @@ public class Player extends GameObject implements KeyListener {
 		
 		onGround = false;
 		facingRight = true;
-		isPaused = false;
 		
 		// Fijamos la aceleracion de la gravedad de forma permanente
 		accel.setY(GRAVITY);
@@ -170,7 +168,7 @@ public class Player extends GameObject implements KeyListener {
 		}
 		
 		// Habilitar doble salto
-		doubleJump = false;
+		doubleJump = true;
 	}
 
 	public Rectangle getCollisionRect() {
@@ -358,15 +356,6 @@ public class Player extends GameObject implements KeyListener {
 		else if (code == KeyEvent.VK_UP) {
 			upPressed = true;
 		}
-		else if (code == KeyEvent.VK_P){
-			if(isPaused){
-				isPaused = false;
-				System.out.println("apague pausa" + isPaused);
-			}else if(!isPaused){
-				isPaused = true;
-				System.out.println("prendi pausa" + isPaused);
-			}
-		}
 	}
 
 	public void keyReleased(KeyEvent e) {
@@ -392,17 +381,5 @@ public class Player extends GameObject implements KeyListener {
 			this.pos = pos;
 			this.animationFrame = animationFrame;
 		}
-	}
-	
-	public void setDoubleJump(boolean b){
-		doubleJump = b;
-	}
-	
-	public boolean getDoubleJump(){
-		return doubleJump;
-	}
-	
-	public boolean getIsPaused() {
-		return isPaused;
 	}
 }
