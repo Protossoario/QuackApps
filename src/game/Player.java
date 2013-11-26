@@ -56,6 +56,7 @@ public class Player extends GameObject implements KeyListener {
 	private static final int FRAME_OFFSET = 15; // Cantidad de frames que separan a la animacion del pato, con el siguiente patito, y a este con el siguiente patito, etc.
 	private static final int HIT_FRAMES = 60;
 	private static final int HIT_FLICKER = 15;
+	private static final String JUMP_SOUND = "jump";
 	
 	Player(GamePanel gp) {
 		super(gp);
@@ -254,6 +255,7 @@ public class Player extends GameObject implements KeyListener {
 				vel.setY(-JUMP);
 				jumping = true;
 				jumpHold = true;
+				clipsL.play(JUMP_SOUND, false);
 			}
 		}
 		else {
@@ -361,10 +363,8 @@ public class Player extends GameObject implements KeyListener {
 		else if (code == KeyEvent.VK_P){
 			if(isPaused){
 				isPaused = false;
-				System.out.println("apague pausa" + isPaused);
 			}else if(!isPaused){
 				isPaused = true;
-				System.out.println("prendi pausa" + isPaused);
 			}
 		}
 	}

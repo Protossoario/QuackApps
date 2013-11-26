@@ -46,6 +46,8 @@ public class QuackPanel extends GamePanel implements MouseListener{
 	private int trashCollectedTotal;
 	private int[] trashCollected;
 	private static final String[] trashNames = {"basuraAluminio.png", "basuraOrganica.png", "basuraPapel.png", "basuraPlastico.png"};
+	private static final String DUCKHIT = "duck1";
+	private static final String ENEMYHIT = "hit";
 	private int[] trashTypeCollectedTotal;
 	
 	private boolean gameOver;
@@ -62,7 +64,6 @@ public class QuackPanel extends GamePanel implements MouseListener{
 		mainMenu = true;
 		addMouseListener(this);
 		initialize("level" + levelCounter + ".txt");
-
 	}
 	
 	public void initialize(String file){
@@ -275,11 +276,13 @@ public class QuackPanel extends GamePanel implements MouseListener{
 				boolean collides = player.collides(e);
 				if (collides) {
 					if (canKill) {
+						clipsL.play(ENEMYHIT, false);
 						player.getVel().setY(-player.getVel().getY());
 						e.setMarkedForDeletion(true);
 					}
 					else if (!player.isHit()) {
 						player.hit();
+						clipsL.play(DUCKHIT, false);
 						if (player.getLives() == 0) {
 							midisL.stop();
 							gameOver = true;
@@ -429,11 +432,10 @@ public class QuackPanel extends GamePanel implements MouseListener{
 			for (Point trash : trashPieces) {
 				if (trash.x >= fromTileX && trash.x <= toTileX &&
 					trash.y >= fromTileY && trash.y <= toTileY) {
-					int drawX = TileMap.tilesToPixels(trash.x) + offsetX;
-					int drawY = TileMap.tilesToPixels(trash.y) + offsetY;
-					dbg.drawImage(imageL.getImage(trashNames[i]),
-										drawX,
-										drawY, this);
+					BufferedImage img = imageL.getImage(trashNames[i]);
+					int drawX = TileMap.tilesToPixels(trash.x) + offsetX + img.getWidth() / 2;
+					int drawY = TileMap.tilesToPixels(trash.y) + offsetY + img.getHeight() / 2;
+					dbg.drawImage(img, drawX, drawY, this);
 				}
 			}
 		}
@@ -497,6 +499,7 @@ public class QuackPanel extends GamePanel implements MouseListener{
 			if(gameOver){
 				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 539 && e.getY() <= 539+49){
 					mainMenu = true;
+					levelCounter = 1;
 					initialize("level1.txt");
 				} 
 				
@@ -509,6 +512,7 @@ public class QuackPanel extends GamePanel implements MouseListener{
 			if(gameWin) {
 				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 539 && e.getY() <= 539+49){
 					mainMenu = true;
+					levelCounter = 1;
 					initialize("level1.txt");
 				} 
 				

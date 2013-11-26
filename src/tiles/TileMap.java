@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.io.File;
 
 public class TileMap {
 	private static final int TILE_SIZE = 64;
@@ -230,7 +229,7 @@ public class TileMap {
 		ArrayList <String> lines = new ArrayList <String> ();
 		try {
 			InputStream in = this.getClass().getClassLoader().getResourceAsStream(fname);
-			if(in == null){
+			if (in == null) {
 				System.out.println("no hay nivel " + fname);
 				return false;
 			}
