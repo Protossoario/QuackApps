@@ -495,6 +495,7 @@ public class QuackPanel extends GamePanel implements MouseListener{
 			if(gameOver){
 				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 539 && e.getY() <= 539+49){
 					mainMenu = true;
+					levelCounter = 1;
 					initialize("level1.txt");
 				} 
 				
@@ -507,6 +508,7 @@ public class QuackPanel extends GamePanel implements MouseListener{
 			if(gameWin) {
 				if(e.getX()>= 551 && e.getX() <= 551+223 && e.getY()>= 539 && e.getY() <= 539+49){
 					mainMenu = true;
+					levelCounter = 1;
 					initialize("level1.txt");
 				} 
 				
