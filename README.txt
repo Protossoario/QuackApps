@@ -1,0 +1,1 @@
+El ejecutable esta en la carpeta /bin/. Se necesita ejecutar desde esta carpeta para que funcione correctamente.
