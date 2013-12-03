@@ -211,7 +211,7 @@ public class QuackPanel extends GamePanel implements MouseListener{
 						trashTypeCollectedTotal[i] += trashCollected[i];
 						trashCollected[i] = 0;
 						clipsL.play(COINS, false);
-						if(map.getTrashTileTypeTotal(0) >= trashTypeCollectedTotal[0]){
+						if (i == 0  && !player.getDoubleJump() && map.getTrashTileTypeTotal(0) == trashTypeCollectedTotal[0]) {
 								player.setDoubleJump(true);
 						}
 					}
@@ -219,7 +219,7 @@ public class QuackPanel extends GamePanel implements MouseListener{
 			}
 		}
 		
-		if(trashCollectedTotal >= map.getTrashTilesTotal()){
+		if(trashCollectedTotal == map.getTrashTilesTotal()){
 			gameWin = true;
 			midisL.stop();
 		}
