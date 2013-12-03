@@ -468,7 +468,7 @@ public class QuackPanel extends GamePanel implements MouseListener{
 		
 	}
 	
-		public void mousePressed(MouseEvent e) {
+		public void mouseReleased(MouseEvent e) {
 			if(mainMenu){
 				if(e.getX()>= 122 && e.getX() <= 122+454 && e.getY()>= 183 && e.getY() <= 183+91 && !credits && !instructions){
 					mainMenu = false;
@@ -533,7 +533,7 @@ public class QuackPanel extends GamePanel implements MouseListener{
 			}	
 		}
 
-		public void mouseReleased(MouseEvent e) {
+		public void mousePressed(MouseEvent e) {
 
 		}
 
