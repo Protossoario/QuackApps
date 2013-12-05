@@ -1,0 +1,50 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BBBBBBBBBBBBBBBBBBBBBBBBBB      BBBBBBBBBBB
+AAAAAAAAAAAAAAAAAAAAAAAAAA      AAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAA      AAAAAAAAAAA
+AAAAAA                       
+AAAAAA                       
+AAAAAA                       
+AAAAAA
+AAAAAA
+AAAAAA                      *
+AA   2
+AA   AA=
+AA   AAB                      
+AA   AAAB                     a1 
+AA   AAAABBBBBBBBBBBBBBBBBBBBBBBBB     2     
+AA   AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AA                                     2
+AA                  2                      
+AA             =    =    =             2      3
+AAAAAAAAAAA    A    A    A    AAAA     AA      
+AAAAAAAAAAA    A    A    A    AAAA            3                                                                                        
+AAAAAAAAAAA    A    A    A    AAAA                     
+AAAAAAAAAAA    A    A    A    AAAA            3                   AAAAAAAAAAAAAA   AAAAAAAAAAAAAA                             
+AAAAAAAAAAA    A    A    A    AAAA                               AA                              
+AAAAAAAAAAA    A    A    A    AAAA            3    =          AAAAA    4    3    2    3   4    AAAAA          b    c    d                   
+AAAAAAAAAAA    A    A    A    AAAA            A    A    AAAAAAAAAAA    =    =    =    =   =    AAAAAAAAAA     A    A    A                   
+AAAAAAAAAAA    A    A    A    AAAA                      AAAAAAAAAAA    A    A    A    A   A    AAAAAAAAAA     A    A    A                    
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF              

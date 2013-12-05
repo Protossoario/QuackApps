@@ -12,20 +12,19 @@
 # 3 es la basura tipo 3
 
                                            2            2
-                                  2     CDDDDE       
+                                = 2     CDDDDE       
                               CDDDDE               
-                      2                             
+                      2                             =
                       BBBBBB 2           b       CDDDDE
       2                      CE 2       CDDDDE            BBB
                    1            BB                       2AAA
-                BBBBB           AA 2               1   BBBAAA   2
-               BAAAAA           AABBBB            BB
-             1BAAAAAABB                         BBAA
-    *   1    BAAAAAAAAA      1  1  1          BBAAAA  a         2
-BBBBBBBBBBBBBAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBAAAAAABBB     BBBBB
+                BBBBB           AA 2 =                 BBBAAA   2
+               BAAAAA           AABBBB             1
+             1BAAAAAABB                           BB
+    *   1    BAAAAAAAAA      1  1  1    =       BBAA  a       = 2
+BBBBBBBBBBBBBAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBAAAABBB     BBBBB
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFFFFFAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-
 
 
 
