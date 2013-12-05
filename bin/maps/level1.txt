@@ -18,7 +18,7 @@
                       BBBBBB 2           b       CDDDDE
       2                      CE 2       CDDDDE            BBB
                    1            BB                       2AAA
-                BBBBB           AA 2 =                 BBBAAA   2
+                BBBBB           AA 2=                  BBBAAA   2
                BAAAAA           AABBBB             1
              1BAAAAAABB                           BB
     *   1    BAAAAAAAAA      1  1  1    =       BBAA  a       = 2
